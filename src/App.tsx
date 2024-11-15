@@ -1,12 +1,11 @@
-// import { ModalLogin } from "./components/modalLogin";
-import { ModalRegistro } from "./components/modalRegistro";
+import { ModalLogin } from "./components/modalLogin";
 
 export function App() {
 
   return (
     <>
       <div className="flex w-full h-screen justify-center items-center">
-        <ModalRegistro />
+        <ModalLogin />
       </div>
     </>
   )
