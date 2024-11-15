@@ -1,4 +1,7 @@
 import { useForm } from "react-hook-form";
+import { CampoInput } from "../campoInput";
+import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
+import { userLogin } from "../../schemas/usuarioValidacao";
 
 interface ILoginUsuario {
     email: string;
@@ -6,7 +9,9 @@ interface ILoginUsuario {
 }
 
 export function ModalLogin() {
-    const { register, handleSubmit } = useForm<ILoginUsuario>();
+    const { register, handleSubmit, formState: { errors } } = useForm<ILoginUsuario>({
+        resolver: zodResolver(userLogin)
+    });
     const onSubmit = (data: ILoginUsuario) => {
         console.log(data);
 
@@ -15,14 +20,22 @@ export function ModalLogin() {
         <section className="w-[329px] h-[344px] flex flex-col items-center justify-evenly shadow-xl rounded-lg">
             <div className="flex flex-col gap-5">
                 <img className="w-[147px]" src="/src/assets/Logo.png" alt="AdotaPet" />
-                <div className="flex flex-col gap-1">
-                    <label>Email</label>
-                    <input {...register("email")} className="w-[281px] text-sm p-3 h-[35px] border-2 rounded-lg border-primary" type="email" placeholder="Nome@exemplo.com" />
-                </div>
-                <div className="flex flex-col gap-1">
-                    <label>Senha</label>
-                    <input {...register("senha")} className="w-[281px] text-sm p-3 h-[35px] border-2 rounded-lg border-primary" type="password" placeholder="********" />
-                </div>
+                <CampoInput
+                    nomeLabel="Email"
+                    nomeRegistro="email"
+                    register={register}
+                    type="email"
+                    placeholder="Nome@exemplo.com"
+                    error={errors.email}
+                />
+                <CampoInput
+                    nomeLabel="Senha"
+                    nomeRegistro="senha"
+                    register={register}
+                    type="password"
+                    placeholder="********"
+                    error={errors.senha}
+                />
                 <button onClick={() => handleSubmit(onSubmit)()} className="w-[281px] h-10 rounded-lg bg-primary text-white">Entrar</button>
             </div>
             <div className="flex gap-2 text-sm">
