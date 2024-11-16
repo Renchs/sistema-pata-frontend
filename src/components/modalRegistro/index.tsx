@@ -17,14 +17,14 @@ export function ModalRegistro() {
     const { register, handleSubmit, formState: { errors } } = useForm<IRegistroUsuario>({
         resolver: zodResolver(userRegistro),
     });
-    const onSubmit = (data: IRegistroUsuario) => {
+    const onRegistroSubmit = (data: IRegistroUsuario) => {
         data.tipo = "usuario";
         console.log(data);
 
     }
     return (
-        <section className="w-[380px] h-[650px] flex flex-col items-center justify-evenly shadow-xl rounded-lg">
-            <div className="flex flex-col gap-5">
+        <section className="w-[380px] h-[650px] flex flex-col items-center justify-evenly shadow-xl rounded-lg bg-white">
+            <form onSubmit={handleSubmit(onRegistroSubmit)} className="flex flex-col gap-5">
                 <img className="w-[147px]" src="/src/assets/Logo.png" alt="AdotaPet" />
                 <CampoInput
                     nomeLabel="Email"
@@ -69,8 +69,8 @@ export function ModalRegistro() {
                     placeholder="********"
                     error={errors.confirmarSenha}
                 />
-                <button onClick={() => handleSubmit(onSubmit)()} className="w-[281px] h-10 rounded-lg bg-primary text-white">Criar Conta</button>
-            </div>
+                <button type="submit" className="w-[281px] h-10 rounded-lg bg-primary text-white">Criar Conta</button>
+            </form>
             <div className="flex gap-2 text-sm">
                 <p>Já tem uma conta?</p>
                 <a className="text-primary font-medium underline" href="#">Login</a>
