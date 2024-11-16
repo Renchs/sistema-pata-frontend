@@ -1,11 +1,12 @@
-import { FormsPet } from "./components/forms-pet";
+// import { FormsPet } from "./components/forms-pet";
+import { ModalLogin } from "./components/modalLogin";
 
 export function App() {
 
   return (
     <>
       <div className="flex w-full bg-[#FAFAFA] h-screen justify-center items-center">
-        <FormsPet />
+        <ModalLogin />
       </div>
     </>
   )
