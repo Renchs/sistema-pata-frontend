@@ -1,8 +1,7 @@
-export function UserList() {
+export function UsuariosLista() {
     return (
-        <div className="flex flex-col gap-1">
-            {/* Seção de resultados */}
-            <section className="w-full h-16 border border-primary flex items-center justify-between p-4 bg-white rounded">
+        <div className="flex flex-col min-h-[700px]">
+            <section className="w-full h-16 border border-primary flex items-center justify-between p-4 bg-white rounded-t">
                 <div className="flex w-full justify-between gap-6 p-4">
                     <div className="flex gap-2 items-center text-sm">
                         <h3 className="font-bold">Resultados</h3>
@@ -22,8 +21,7 @@ export function UserList() {
                 </div>
             </section>
 
-            {/* Tabela */}
-            <section className="overflow-x-auto border-l border-r border-t border-primary rounded">
+            <section className="overflow-x-auto border-l border-r border-t border-primary rounded rounded-t-none">
                 <table className="min-w-full table-auto border-collapse">
                     <thead>
                         <tr className="bg-primary text-left text-sm font-semibold text-white">
@@ -31,7 +29,7 @@ export function UserList() {
                             <th className="px-4 py-2 border-b border-primary ">Email</th>
                             <th className="px-4 py-2 border-b border-primary">Cargo</th>
                             <th className="px-4 py-2 border-b border-primary hidden md:table-cell">Telefone</th>
-                            <th className="px-4 py-2 border-b border-primary">Ações</th> {/* A coluna de Ações não vai sumir */}
+                            <th className="px-4 py-2 border-b border-primary">Ações</th> 
                         </tr>
                     </thead>
                     <tbody>

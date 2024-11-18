@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,10 +28,11 @@ export function Header() {
 
             <nav className={`hidden xl:flex gap-6 font-medium`}>
                 <a className="hover:text-primary" href="#">Buscar Pet</a>
+
                 <a className="hover:text-primary" href="#">Historico de Adoções</a>
                 <a className="hover:text-primary" href="#">Cadastrar Pet</a>
-                <a className="hover:text-primary" href="#">Gerenciar Pet</a>
-                <a className="hover:text-primary" href="#">Gerenciar Usuário</a>
+                <Link className="hover:text-primary" to={"/usuarios"}>Gerenciar Usuário</Link>
+                <Link className="hover:text-primary" to={"/cadastrar-pet"}>Cadastrar Pet</Link>
             </nav>
 
             <div className={`hidden w-[184px] h-12 cursor-pointer xl:flex items-center justify-center gap-2 border border-primary rounded-md text-primary`}>
@@ -45,10 +47,10 @@ export function Header() {
                 <nav className="flex flex-col gap-4 p-4 font-medium">
                     <a className="hover:text-primary" href="#">Buscar Pet</a>
                     <a className="hover:text-primary" href="#">Historico de Adoções</a>
-                    <a className="hover:text-primary" href="#">Cadastrar Pet</a>
-                    <a className="hover:text-primary" href="#">Gerenciar Pet</a>
-                    <a className="hover:text-primary" href="#">Gerenciar Usuário</a>
+                    <Link className="hover:text-primary" to={"/usuarios"}>Gerenciar Usuário</Link>
+                    <Link className="hover:text-primary" to={"/cadastrar-pet"}>Cadastrar Pet</Link>
                     <a className="hover:text-primary" href="#">Minha Conta</a>
+                    <a className="hover:text-primary" href="#">Sair</a>
                 </nav>
             </div>
         </header>
