@@ -1,13 +1,25 @@
 // import { ModalRegistro } from "./components/modalRegistro";
-import { UserList } from "./pages/userList";
+import { Header } from "./components/header";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { UsuariosLista } from "./pages/UsuariosLista";
+import { CadastrarPet } from "./pages/CadastrarPet";
+import { BuscarPets } from "./pages/BuscarPets";
+// import { UserList } from "./pages/userList";
 
 export function App() {
 
   return (
     <>
-      <div className="flex w-full bg-[#FAFAFA] h-screen justify-center items-center">
-        <UserList />
-      </div>
+        <Router>
+        <Header />
+        <div className="flex w-full bg-[#FAFAFA] min-h-[800px] justify-center items-center">
+          <Routes>
+            <Route path="/usuarios" element={<UsuariosLista />} />
+            <Route path="/cadastrar-pet" element={<CadastrarPet />} />
+            <Route path="/pets" element={<BuscarPets />} />
+          </Routes>
+        </div>
+        </Router>
     </>
   )
 }
