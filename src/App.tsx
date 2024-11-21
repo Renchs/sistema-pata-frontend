@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UsuariosLista } from "./pages/UsuariosLista";
 import { CadastrarPet } from "./pages/CadastrarPet";
 import { BuscarPets } from "./pages/BuscarPets";
+import { CadastrarUsuario } from "./pages/CadastrarUsuario";
 // import { UserList } from "./pages/userList";
 
 export function App() {
@@ -16,6 +17,7 @@ export function App() {
           <Routes>
             <Route path="/usuarios" element={<UsuariosLista />} />
             <Route path="/cadastrar-pet" element={<CadastrarPet />} />
+            <Route path="/cadastrar-usuario" element={<CadastrarUsuario />} />
             <Route path="/pets" element={<BuscarPets />} />
           </Routes>
         </div>
