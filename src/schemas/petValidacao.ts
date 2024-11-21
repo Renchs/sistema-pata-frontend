@@ -18,7 +18,7 @@ export const dataNascimentoPet = z.string().regex(/^\d{2}-\d{2}-\d{4}$/, 'O form
 
 
 
-export const registroPet = z.object({
+export const petFormSchema = z.object({
     nome: nomePet,
     especie: especiePet,
     tamanho: tamanhoPet,
@@ -26,3 +26,5 @@ export const registroPet = z.object({
     descricao: descricaoPet,
     data_nascimento: dataNascimentoPet,
 })
+
+export type IFormPet = z.infer<typeof petFormSchema>;

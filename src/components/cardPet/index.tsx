@@ -32,7 +32,7 @@ export function CardPet({ id, nome, especie, data_nascimento, descricao, persona
         onSelectedId(id);
     }
     return (
-        <div className="relative w-[346px] h-[342px] flex flex-col justify-center border border-primary rounded-md gap-2 p-4 text-sm bg-white">
+        <div className="relative z-10 w-[346px] h-[342px] flex flex-col justify-center border border-primary rounded-md gap-2 p-4 text-sm bg-white">
             <div className="w-full flex items-center justify-end">
                 <button onClick={handleClickMenu}>
                     <img className="w-5" src="/src/assets/tres-pontos.svg" alt="" />
