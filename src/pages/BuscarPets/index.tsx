@@ -2,6 +2,8 @@ import { useState } from "react";
 import { CardPet } from "../../components/cardPet";
 import { dadosPetLista } from "../../utils/exemploDeDados";
 import { CampoFiltroPet } from "../../components/campoFiltroPet";
+import { ModalEditPet } from "../../components/modalEditPet";
+import { IFormPetRegistro } from "../../schemas/petValidacao";
 
 export function BuscarPets() {
     const [selectPersonalidade, setSelectPersonalidade] = useState('');
@@ -9,8 +11,12 @@ export function BuscarPets() {
     const [selectAdocao, setSelectAdocaoId] = useState<number>();
     const [selectEditPet, setSelectEditPet] = useState<number>();
     const [selectDeletePet, setSelectDeletePet] = useState<number>();
+    const [isModalDeletePet, setIsModalDeletePet] = useState(false);
+    const [isModalEditePet, setIsModalEditePet] = useState(false);
 
-    
+    const [petEdit, setPetEdit] = useState<IFormPetRegistro>();
+
+
     const handleSelectPersonalidade = (personalidade: string) => {
         setSelectPersonalidade(personalidade);
         console.log(selectPersonalidade);
@@ -18,18 +24,32 @@ export function BuscarPets() {
 
     const handleSelectEditPet = (petId: number) => {
         setSelectEditPet(petId);
+        setIsModalEditePet(true);
+      
+        setPetEdit({
+            nome: "Rex",
+            especie: "Cachorro",
+            tamanho: "medio", 
+            personalidade: "brincalhao", 
+            descricao: "Um cachorro muito amigável",
+            data_nascimento: "10-05-2010",
+        });
+        
         console.log(selectEditPet);
     }
 
     const handleSelectDeletePet = (petId: number) => {
         setSelectDeletePet(petId);
+        setIsModalDeletePet(true);
+
         console.log(selectDeletePet);
+
     }
 
     const handleSelectAdocaoId = (adocaoId: number) => {
         setSelectAdocaoId(adocaoId);
         console.log(selectAdocao);
-        
+
     }
 
     const handleSelectTamanho = (tamanho: string) => {
@@ -56,6 +76,34 @@ export function BuscarPets() {
                 <p className="text-sm w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white font-medium">{dadosPetLista.length}</p>
             </div>
 
+            {isModalEditePet && petEdit && (
+                <div className="fixed z-20 inset-0 flex justify-center items-center bg-black bg-opacity-50">
+                        <ModalEditPet petEdit={petEdit} onClose={() => setIsModalEditePet(false)} />
+                </div>
+            )}
+
+            {isModalDeletePet && (
+                <div className="fixed z-20 inset-0 flex justify-center items-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-xl w-80 sm:w-[600px] text-center">
+                        <h3 className="text-lg font-semibold mb-4">Você tem certeza que deseja excluir o registro desse pet?</h3>
+                        <div className="flex justify-center gap-4">
+                            <button
+                                className="w-[150px] h-10 rounded-lg bg-white border border-primary text-primary"
+                                onClick={() => setIsModalDeletePet(false)}
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                className="w-[150px] h-10 rounded-lg bg-red-500 text-white"
+                                onClick={() => console.log('Deletar Pet')}
+                            >
+                                Deletar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="flex items-start justify-center gap-4 w-full p-4 flex-wrap">
                 {dadosPetLista.length > 0 && (
                     dadosPetLista.map((pet, i) => (
@@ -64,7 +112,7 @@ export function BuscarPets() {
                             id={i}
                             onDelete={handleSelectDeletePet}
                             onEdit={handleSelectEditPet}
-                            onSelectedId={handleSelectAdocaoId} 
+                            onSelectedId={handleSelectAdocaoId}
                             nome={pet.nome}
                             especie={pet.especie}
                             personalidade={pet.personalidade}
@@ -81,6 +129,6 @@ export function BuscarPets() {
                 <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg">Proxima Página</button>
             </div>
 
-        </div>
+        </div >
     )
 }
