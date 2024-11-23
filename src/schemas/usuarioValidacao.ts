@@ -11,7 +11,8 @@ export const userLogin = z.object({
     senha: senhaSchema,
 })
 
-export const userRegistro = z.object({
+export const userFormSchema = z.object({
+    nome: z.string().min(3, "Nome é obrigatório").max(50, "Nome não pode ser superior a 50 caracteres"),
     email: emailSchema,
     confirmarEmail: z.string()
         .email("Digite um email válido")
@@ -28,4 +29,4 @@ export const userRegistro = z.object({
     path: ['confirmarSenha'],
 });
 
-export type IRegistroUsuarioNovo = z.infer<typeof userRegistro>;
+export type IFormUserRegistro = z.infer<typeof userFormSchema>;

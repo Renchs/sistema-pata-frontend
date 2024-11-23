@@ -7,15 +7,16 @@ export interface ICampoInput<T extends FieldValues> {
     nomeRegistro: Path<T>;
     register: UseFormRegister<T>;
     error?: FieldError;
-
+    defalultValue?: string;
 }
 
-export function CampoInput<T extends FieldValues>({ nomeLabel, nomeRegistro, register, placeholder, type, error }: ICampoInput<T>) {
+export function CampoInput<T extends FieldValues>({ nomeLabel, nomeRegistro, register, placeholder, type, error, defalultValue }: ICampoInput<T>) {
     return (
         <div className="flex flex-col gap-1">
             <label id={nomeLabel}>{nomeLabel}</label>
             <input
                 {...register(nomeRegistro)}
+                value={defalultValue}
                 max={200}
                 placeholder={placeholder}
                 type={type}

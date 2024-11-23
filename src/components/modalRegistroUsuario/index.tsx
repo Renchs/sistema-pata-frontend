@@ -1,11 +1,12 @@
 import { CampoInput } from "../campoInput";
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
-import { userRegistro } from "../../schemas/usuarioValidacao";
+import { userFormSchema } from "../../schemas/usuarioValidacao";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 
 export interface IRegistroUsuario {
+    nome: string;
     email: string;
     confirmarEmail: string;
     senha: string;
@@ -16,7 +17,7 @@ export interface IRegistroUsuario {
 
 export function ModalRegistro() {
     const [selectTipoUsuariom, setSelectTipoUsuario] = useState<"usuario" | "administrador">("usuario")
-    const { register, handleSubmit, formState: { errors } } = useForm<IRegistroUsuario>({ resolver: zodResolver(userRegistro), });
+    const { register, handleSubmit, formState: { errors } } = useForm<IRegistroUsuario>({ resolver: zodResolver(userFormSchema), });
 
 
     const handleChangeTipoUsuario = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -30,9 +31,17 @@ export function ModalRegistro() {
 
 
     return (
-        <section className="w-[380px] h-[650px] flex flex-col items-center justify-evenly shadow-xl rounded-lg bg-white">
+        <section className="w-[380px] h-[780px] flex flex-col items-center justify-evenly shadow-xl rounded-lg">
             <form onSubmit={handleSubmit(onRegistroSubmit)} className="flex flex-col gap-5">
                 <img className="w-[147px]" src="/src/assets/Logo.png" alt="AdotaPet" />
+                <CampoInput
+                    nomeLabel="Nome"
+                    nomeRegistro="nome"
+                    register={register}
+                    placeholder="Jhon doe"
+                    type="text"
+                    error={errors.email}
+                />
                 <CampoInput
                     nomeLabel="Email"
                     nomeRegistro="email"

@@ -27,4 +27,5 @@ export const petFormSchema = z.object({
     data_nascimento: dataNascimentoPet,
 })
 
-export type IFormPet = z.infer<typeof petFormSchema>;
+export type IFormPetRegistro = z.infer<typeof petFormSchema>;
+

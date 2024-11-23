@@ -10,9 +10,11 @@ interface IFormPet {
     control: UseFormReturn<IFormPet>['control'];
     currentUser?: IFormPet | null;
     errors: Partial<Record<keyof IFormPet, FieldError>>;
+    editForm?: boolean;
+    onClose?: () => void;
 }
 
-export function FormPet({ onSubmit, control, register, errors, handleSubmit }: IFormPet) {
+export function FormPet({ onSubmit, control, register, errors, handleSubmit, editForm, onClose }: IFormPet) {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="sm:w-[640px] flex flex-col items-center gap-6">
             <div className="flex flex-col sm:flex-row w-full gap-4 sm:gap-16 sm:items-start items-center">
@@ -105,11 +107,13 @@ export function FormPet({ onSubmit, control, register, errors, handleSubmit }: I
                 )}
             </div>
             <div className="flex gap-4 w-full justify-center">
-                <button className="sm:w-[123px] w-[80px] h-12 border text-primary border-primary rounded-lg">
-                    Voltar
-                </button>
+                {editForm && (
+                    <button onClick={() => onClose()} className="sm:w-[123px] w-[80px] h-12 border text-primary border-primary rounded-lg">
+                        Voltar
+                    </button>
+                )}
                 <button type="submit" className="sm:w-[123px] w-[80px] h-12 bg-primary text-white rounded-lg">
-                    Registrar
+                    {`${editForm ? 'Atualizar' : 'Registrar'}`}
                 </button>
             </div>
         </form>

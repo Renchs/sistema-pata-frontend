@@ -1,16 +1,16 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IFormPet, petFormSchema } from "../../schemas/petValidacao";
+import { IFormPetRegistro, petFormSchema } from "../../schemas/petValidacao";
 import { FormPet } from "../../components/formPet";
 
 
 export function CadastrarPet() {
-    const { control, register, handleSubmit, formState: { errors } } = useForm<IFormPet>({
+    const { control, register, handleSubmit, formState: { errors } } = useForm<IFormPetRegistro>({
         resolver: zodResolver(petFormSchema)
     });
 
 
-    const onSubmit = (data: IFormPet) => {        
+    const onSubmit = (data: IFormPetRegistro) => {        
         console.log(data);
     }
 
