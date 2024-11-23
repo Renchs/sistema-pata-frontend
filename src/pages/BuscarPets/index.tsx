@@ -2,6 +2,8 @@ import { useState } from "react";
 import { CardPet } from "../../components/cardPet";
 import { dadosPetLista } from "../../utils/exemploDeDados";
 import { CampoFiltroPet } from "../../components/campoFiltroPet";
+import { ModalEditPet } from "../../components/modalEditPet";
+import { IFormPetRegistro } from "../../schemas/petValidacao";
 
 export function BuscarPets() {
     const [selectPersonalidade, setSelectPersonalidade] = useState('');
@@ -10,6 +12,10 @@ export function BuscarPets() {
     const [selectEditPet, setSelectEditPet] = useState<number>();
     const [selectDeletePet, setSelectDeletePet] = useState<number>();
     const [isModalDeletePet, setIsModalDeletePet] = useState(false);
+    const [isModalEditePet, setIsModalEditePet] = useState(false);
+
+    const [petEdit, setPetEdit] = useState<IFormPetRegistro>();
+
 
     const handleSelectPersonalidade = (personalidade: string) => {
         setSelectPersonalidade(personalidade);
@@ -18,6 +24,17 @@ export function BuscarPets() {
 
     const handleSelectEditPet = (petId: number) => {
         setSelectEditPet(petId);
+        setIsModalEditePet(true);
+      
+        setPetEdit({
+            nome: "Rex",
+            especie: "Cachorro",
+            tamanho: "medio", 
+            personalidade: "brincalhao", 
+            descricao: "Um cachorro muito amigável",
+            data_nascimento: "10-05-2010",
+        });
+        
         console.log(selectEditPet);
     }
 
@@ -58,6 +75,12 @@ export function BuscarPets() {
                 <h3 className="font-bold">Resultados</h3>
                 <p className="text-sm w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white font-medium">{dadosPetLista.length}</p>
             </div>
+
+            {isModalEditePet && petEdit && (
+                <div className="fixed z-20 inset-0 flex justify-center items-center bg-black bg-opacity-50">
+                        <ModalEditPet petEdit={petEdit} onClose={() => setIsModalEditePet(false)} />
+                </div>
+            )}
 
             {isModalDeletePet && (
                 <div className="fixed z-20 inset-0 flex justify-center items-center bg-black bg-opacity-50">

@@ -22,6 +22,7 @@ export function CardPet({ id, nome, especie, data_nascimento, descricao, persona
 
     const handleEditPet = () => {
         onEdit(id);
+        
     }
 
     const handleDeletePet = () => {

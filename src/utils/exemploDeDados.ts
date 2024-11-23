@@ -3,61 +3,61 @@ export const dadosUsuarioLista = [
         "nome": "Ana Souza",
         "email": "ana.souza@example.com",
         "telefone": "12345678910",
-        "cargo": "administrador"
+        "tipo": "administrador"
     },
     {
         "nome": "Carlos Silva",
         "email": "carlos.silva@example.com",
         "telefone": "12345678910",
-        "cargo": "usuário"
+        "tipo": "usuário"
     },
     {
         "nome": "Fernanda Oliveira",
         "email": "fernanda.oliveira@example.com",
         "telefone": "12345678910",
-        "cargo": "usuário"
+        "tipo": "usuário"
     },
     {
         "nome": "Roberto Santos",
         "email": "roberto.santos@example.com",
         "telefone": "12345678910",
-        "cargo": "administrador"
+        "tipo": "administrador"
     },
     {
         "nome": "Julia Pereira",
         "email": "julia.pereira@example.com",
         "telefone": "12345678910",
-        "cargo": "usuário"
+        "tipo": "usuário"
     },
     {
         "nome": "Lucas Almeida",
         "email": "lucas.almeida@example.com",
         "telefone": "12345678910",
-        "cargo": "administrador"
+        "tipo": "administrador"
     },
     {
         "nome": "Mariana Costa",
         "email": "mariana.costa@example.com",
         "telefone": "12345678910",
-        "cargo": "usuário"
+        "tipo": "usuário"
     },
     {
         "nome": "Pedro Lima",
         "email": "pedro.lima@example.com",
         "telefone": "12345678910",
-        "cargo": "administrador"
+        "tipo": "administrador"
     },
     {
         "nome": "Carla Ribeiro",
         "email": "carla.ribeiro@example.com",
         "telefone": "12345678910",
-        "cargo": "usuário"
+        "tipo": "usuário"
     },
     {
         "nome": "Thiago Martins",
         "email": "thiago.martins@example.com",
         "telefone": "12345678910",
-        "cargo": "administrador"
+        "tipo": "administrador"
     }
 ]
 
