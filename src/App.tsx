@@ -5,15 +5,16 @@ import { UsuariosLista } from "./pages/UsuariosLista";
 import { CadastrarPet } from "./pages/CadastrarPet";
 import { BuscarPets } from "./pages/BuscarPets";
 import { CadastrarUsuario } from "./pages/CadastrarUsuario";
+import { Footer } from "./components/footer";
 // import { UserList } from "./pages/userList";
 
 export function App() {
 
   return (
     <>
-        <Router>
+      <Router>
         <Header />
-        <div className="flex w-full bg-[#FAFAFA] min-h-[800px] justify-center items-center">
+        <div className="flex w-full bg-[#FAFAFA] min-h-[900px] justify-center items-center">
           <Routes>
             <Route path="/usuarios" element={<UsuariosLista />} />
             <Route path="/cadastrar-pet" element={<CadastrarPet />} />
@@ -21,7 +22,8 @@ export function App() {
             <Route path="/pets" element={<BuscarPets />} />
           </Routes>
         </div>
-        </Router>
+        <Footer />
+      </Router>
     </>
   )
 }
