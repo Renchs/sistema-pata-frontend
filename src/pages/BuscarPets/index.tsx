@@ -58,7 +58,7 @@ export function BuscarPets() {
     }
 
     return (
-        <div className="w-full flex flex-col max-h-[700px] items-center gap-4">
+        <div className="w-full flex flex-col justify-center items-center p-4 gap-4">
             <div className="w-[80%] sm:w-[500px] py-2 flex border rounded bg-white border-primary px-2">
                 <input className="w-full sm:w-[500px] rounded focus:outline-none" placeholder="Pesquisar por espécie" type="text" />
                 <button>
@@ -125,8 +125,8 @@ export function BuscarPets() {
             </div>
 
             <div className="w-full flex items-center justify-center gap-4">
-                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg">Página Anterior</button>
-                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg">Proxima Página</button>
+                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white">Página Anterior</button>
+                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white">Proxima Página</button>
             </div>
 
         </div >
