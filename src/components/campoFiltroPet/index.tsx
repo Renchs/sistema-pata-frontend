@@ -16,9 +16,9 @@ export function CampoFiltroPet({ onSelectPersonalidade, onSelectTamanho }: ICamp
     }
 
     return (
-        <section className="w-full sm:w-[500px] h-16 border border-primary flex items-center justify-center p-4 bg-white rounded">
+        <section className="w-full sm:w-[500px] h-24 sm:h-16 border border-primary flex items-center justify-center p-4 bg-white rounded">
             <div className="flex w-full justify-center gap-2">
-                <div className="flex items-center justify-center text-xs gap-2 w-[185px] h-[62px]">
+                <div className="flex flex-col sm:flex-row items-center justify-center text-xs gap-2 w-[185px] h-[62px]">
                     <p>Tamanho</p>
                     <div className="w-20 h-8 flex justify-center items-center bg-[#E5E7EB] text-center rounded font-bold">
                         <select onChange={handleChangeTamanho} className="bg-transparent appearance focus:outline-none text-xs">
@@ -30,7 +30,7 @@ export function CampoFiltroPet({ onSelectPersonalidade, onSelectTamanho }: ICamp
                         </select>
                     </div>
                 </div>
-                <div className="flex items-center justify-center text-xs gap-2 w-[185px] h-[62px]">
+                <div className="flex flex-col sm:flex-row items-center justify-center text-xs gap-2 w-[185px] h-[62px]">
                     <p>Personalidade</p>
                     <div className="w-32 h-8 flex justify-center items-center bg-[#E5E7EB] text-center rounded font-bold">
                         <select onChange={handleChangePersonalidde} className="bg-transparent appearance focus:outline-none text-xs">

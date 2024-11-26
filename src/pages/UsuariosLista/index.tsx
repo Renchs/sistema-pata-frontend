@@ -43,7 +43,7 @@ export function UsuariosLista() {
 
 
     return (
-        <div className="flex flex-col min-h-[600px] gap-5">
+        <div className="flex justify-center flex-col gap-5">
             <div className="container">
                 <section className="w-full h-16 border border-primary flex items-center justify-between p-4 bg-white rounded-t">
                     <div className="flex w-full justify-between gap-6 p-4">
@@ -126,8 +126,8 @@ export function UsuariosLista() {
                 </section>
             </div>
             <div className="w-full flex items-center justify-center gap-4">
-                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg">Página Anterior</button>
-                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg">Proxima Página</button>
+                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white">Página Anterior</button>
+                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white">Proxima Página</button>
             </div>
         </div>
 
