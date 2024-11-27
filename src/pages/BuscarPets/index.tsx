@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CardPet } from "../../components/cardPet";
 import { dadosPetLista } from "../../utils/exemploDeDados";
 import { CampoFiltroPet } from "../../components/campoFiltroPet";
 import { ModalEditPet } from "../../components/modalEditPet";
 import { IFormPetRegistro } from "../../schemas/petValidacao";
+import { IPetDados } from "../../interfaces/IPetDados";
+import { api } from "../../services/apiService";
 
 export function BuscarPets() {
     const [selectPersonalidade, setSelectPersonalidade] = useState('');
@@ -13,9 +15,19 @@ export function BuscarPets() {
     const [selectDeletePet, setSelectDeletePet] = useState<number>();
     const [isModalDeletePet, setIsModalDeletePet] = useState(false);
     const [isModalEditePet, setIsModalEditePet] = useState(false);
-
     const [petEdit, setPetEdit] = useState<IFormPetRegistro>();
+    const [petsData, setPetsData] = useState<IPetDados[]>();
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await api.get('/pets');
+            console.log(result);
+            
+            setPetsData(result.data);
+        };
+        
+        fetchData();
+    }, []);
 
     const handleSelectPersonalidade = (personalidade: string) => {
         setSelectPersonalidade(personalidade);
