@@ -2,29 +2,37 @@ import { useForm } from "react-hook-form"
 import { IFormUserRegistro, userFormSchema } from "../../schemas/usuarioValidacao"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormUser } from "../formUser";
+import { IUsuarioDados } from "../../interfaces/IUsuarioDados";
+import { api } from "../../services/apiService";
 
 
 
 //interface UsuarioSemSenha extends Omit<Usuario, 'senha' | 'confirmacaoSenha'> {}
 
 interface IModalEditUser {
-    userEdit: {
-        nome: string;
-        email: string;
-        telefone: string;
-        tipo: 'administrador' | 'usuario';
-    };
-    onClose: () => void; 
+    userEdit: IUsuarioDados;
+    onClose: () => void;
 }
 export function ModalEditUser({ userEdit, onClose }: IModalEditUser) {
-    const { control, register, handleSubmit, formState: { errors } } = useForm<IFormUserRegistro>({
+    const { control, register, handleSubmit, reset, formState: { errors } } = useForm<IFormUserRegistro>({
         resolver: zodResolver(userFormSchema),
-        defaultValues: userEdit
+        defaultValues: {
+            nome: userEdit.nome,
+            email: userEdit.email,
+            telefone: userEdit.telefone,
+            tipo: (userEdit.tipo || "usuario") as "usuario" | "administrador",
+        }
     });
 
-    const onSubmit = (data: IFormUserRegistro) => {
-        console.log('editou a informacao');
-        console.log(data);
+    const onSubmit = async (data: IFormUserRegistro) => {
+        await api.put(`usuario/${userEdit.id}`, data, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+            },
+        });
+        
+        reset();
+        onClose();
     }
 
     return (
