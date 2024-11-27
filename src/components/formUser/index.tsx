@@ -18,7 +18,7 @@ interface IFormUser {
 
 export function FormUser({ onSubmit, control, register, errors, handleSubmit, editForm, onClose }: IFormUser) {
     return (
-        <section className="w-[380px] h-[800px] flex flex-col items-center justify-evenly shadow-xl rounded-lg bg-white">
+        <section className={`w-[380px] ${editForm ? 'h-[600px]' : 'h-[800px]'} flex flex-col items-center justify-evenly shadow-xl rounded-lg bg-white`}>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
                 <img className="w-[147px]" src="/src/assets/Logo.png" alt="AdotaPet" />
                 <CampoInput
@@ -52,27 +52,31 @@ export function FormUser({ onSubmit, control, register, errors, handleSubmit, ed
                     type="tel"
                     error={errors.telefone}
                 />
-                <CampoInput
-                    nomeLabel="Senha"
-                    nomeRegistro="senha"
-                    register={register}
-                    type="password"
-                    placeholder="********"
-                    error={errors.senha}
-                />
-                <CampoInput
-                    nomeLabel="Confirmar Senha"
-                    nomeRegistro="confirmarSenha"
-                    register={register}
-                    type="password"
-                    placeholder="********"
-                    error={errors.confirmarSenha}
-                />
+                {!editForm && (
+                    <>
+                        <CampoInput
+                            nomeLabel="Senha"
+                            nomeRegistro="senha"
+                            register={register}
+                            type="password"
+                            placeholder="********"
+                            error={errors.senha}
+                        />
+                        <CampoInput
+                            nomeLabel="Confirmar Senha"
+                            nomeRegistro="confirmarSenha"
+                            register={register}
+                            type="password"
+                            placeholder="********"
+                            error={errors.confirmarSenha}
+                        />
+                    </>
+                )}
                 <Controller
                     name="tipo"
                     control={control}
                     render={({ field }) => (
-                        <select defaultValue={""} {...field} id="tipo" required className="focus:outline-none">
+                        <select  {...field} id="tipo" defaultValue={""} required className="focus:outline-none">
                             <option disabled value="">Tipo de conta</option>
                             <option value="usuario">Usuário</option>
                             <option value="administrador">Administrador</option>

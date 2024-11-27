@@ -1,33 +1,39 @@
 import { useState } from "react";
 import { formatarNumeroTelefone } from "../../utils/formatarNumeroTelefone";
+import { IUsuarioDados } from "../../interfaces/IUsuarioDados";
+import { truncarNome } from "../../utils/truncarNome";
 
 interface ICampoTabelaUser {
   id: number,
   nome: string;
   email: string;
-  cargo: string;
+  tipo: string;
   telefone: string;
-  onEdit: (id: number) => void;
+  onEdit: (user: IUsuarioDados) => void;
   onDelete: (id: number) => void;
   onhistorical: (id: number) => void;
   onSelectedId: (id: number) => void;
 }
-export function CampoTabelaUser({ id, nome, email, cargo, telefone, onDelete, onEdit, onSelectedId, onhistorical }: ICampoTabelaUser) {
+export function CampoTabelaUser({ id, nome, email, tipo, telefone, onDelete, onEdit, onSelectedId, onhistorical }: ICampoTabelaUser) {
   const [selectedOption, setSelectedOption] = useState("");
   const resetSelect = () => {
     setSelectedOption(""); 
   };
 
   const handleEdit = () => {
-    onEdit(id);
+    onEdit({
+      id,
+      nome,
+      email,
+      tipo,
+      telefone,
+    });
     resetSelect()
   }
 
   const handleDelete = () => {
     onDelete(id);
     resetSelect()
-    console.log(selectedOption);
-
   }
 
   const handleHistorical = () => {
@@ -64,13 +70,13 @@ export function CampoTabelaUser({ id, nome, email, cargo, telefone, onDelete, on
   return (
     <tr className="relative z-10 border-b border-primary bg-white">
       <td className="px-4 py-2 hidden md:table-cell">
-        {nome}
+        {truncarNome(nome)}
       </td>
       <td className="px-4 py-2">
         {email}
       </td>
       <td className="px-4 py-2 hidden md:table-cell">
-        {cargo}
+        {tipo}
       </td>
       <td className="px-4 py-2 hidden md:table-cell">
         +55 {formatarNumeroTelefone(telefone)}
@@ -79,7 +85,6 @@ export function CampoTabelaUser({ id, nome, email, cargo, telefone, onDelete, on
         <select
           className="p-2 border rounded bg-white"
           onChange={handleSelectChange}
-          defaultValue={""}
           value={selectedOption}
         >
           <option disabled value="">Exibir</option>
