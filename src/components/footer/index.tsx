@@ -1,14 +1,14 @@
 export function Footer() {
     return (
-        <footer className="w-full flex flex-col justify-center gap-4 h-[700px] lg:h-[302px]">
-            <div className="flex flex-col items-center justify-evenly lg:justify-around lg:flex-row h-full">
-                <div className="w-[305px] flex flex-col h-36 gap-3">
+        <footer className="w-full flex flex-col justify-center gap-4 h-[700px] lg:h-[302px] bg-[#FBFBFB]">
+            <div className="flex flex-col items-center justify-evenly md:justify-center lg:justify-around md:gap-7 lg:gap-0 md:flex-row md:flex-wrap h-full">
+                <div className="w-[305px] text-xl flex flex-col h-36 gap-3">
                     <p>Como pode nos ajudar?</p>
-                    <p className="text-primary text-sm">Adote um pet</p>
-                    <p className="text-primary text-sm">Contribua para o projeto</p>
+                    <p className="text-primary text-lg">Adote um pet</p>
+                    <p className="text-primary text-lg">Contribua para o projeto</p>
                 </div>
                 <div className="w-[305px] flex flex-col h-36 gap-3">
-                    <p>Onde pode nos encontrar</p>
+                    <p className="text-xl">Onde pode nos encontrar</p>
                     <div className="flex gap-3">
                         <img src="/src/assets/svgs/location.svg" alt="localização" />
                         <p>12 Rua Sol, SP, Brasil</p>
@@ -22,10 +22,10 @@ export function Footer() {
                         <p>adotapetsuporte@gmail.com</p>
                     </div>
                 </div>
-                <div className="w-[305px] flex flex-col h-36 justify-between">
+                <div className="w-[305px] flex flex-col gap-4 h-36 justify-between">
                     <div className="flex flex-col gap-1">
-                        <p>Como tudo começou</p>
-                        <p className="w-[305px] text-sm">O projeto se originou a partir de uma inicativa do Instituto Atlântico em 2024.</p>
+                        <p className="text-xl">Como tudo começou</p>
+                        <p className="w-[305px] text-lg">O projeto se originou a partir de uma inicativa do Instituto Atlântico em 2024.</p>
                     </div>
                     <div className="w-full flex gap-3">
                         <a className="w-40 h-10 flex text-primary bg-white border-primary border items-center justify-center rounded-lg" href="#">Sobre o Instituto</a>

@@ -35,12 +35,13 @@ export function DropdownMenu() {
     return (
         <>
             <div className="relative" ref={menuRef}>
-
+                {/* Botão "Minha Conta" */}
                 <button onClick={toggleMenu} className="hidden w-[184px] relative h-12 cursor-pointer lg:flex items-center justify-center gap-2 border border-primary rounded-md text-primary focus:outline-none">
                     <img className="w-6" src="/src/assets/iconUser.svg" alt="Ícone de usuário" />
                     Minha Conta
                 </button>
 
+                {/* Dropdown */}
                 {isDropdown && (
                     <div className="absolute z-50 right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
                         <ul className="py-1">
@@ -81,6 +82,7 @@ export function DropdownMenu() {
                 )}
 
             </div>
+            {/* Modal de Login */}
             {isLoginModalOpen && <ModalLogin onClose={closeLoginModal} />}
         </>
     );

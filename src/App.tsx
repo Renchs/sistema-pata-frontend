@@ -1,4 +1,3 @@
-// import { ModalRegistro } from "./components/modalRegistro";
 import { Header } from "./components/header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UsuariosLista } from "./pages/UsuariosLista";
@@ -8,7 +7,6 @@ import { CadastrarUsuario } from "./pages/CadastrarUsuario";
 import { Footer } from "./components/footer";
 import { Toaster } from "react-hot-toast";
 import { Home } from "./pages/Home";
-// import { UserList } from "./pages/userList";
 
 export function App() {
 
