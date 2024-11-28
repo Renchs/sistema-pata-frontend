@@ -16,9 +16,8 @@ export function CadastrarUsuario() {
 
     const onSubmit: SubmitHandler<IFormUserRegistro> = async (data) => {
         try {
-            const result = await api.post('/usuario', data);
+            await api.post('/usuario', data);
             reset();
-            console.log(result);
             toast.success('Novo usuário registrado com sucesso.');
 
         } catch (error) {
@@ -26,7 +25,6 @@ export function CadastrarUsuario() {
             const message = (err.response?.data as { message: string })?.message || "Ocorreu um erro inesperado, aguarde e tente novamente.";
             toast.error(message);
         }
-        
     }
 
     return (

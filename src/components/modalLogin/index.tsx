@@ -5,6 +5,9 @@ import { userLogin } from "../../schemas/usuarioValidacao";
 import { api } from "../../services/apiService";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
+import { useContext } from "react";
+import { AuthContext } from "../../auth/authContext";
+import { useNavigate } from "react-router-dom";
 
 interface ILoginUsuario {
     email: string;
@@ -13,28 +16,27 @@ interface ILoginUsuario {
 
 interface IModalLogin {
     onClose: () => void;
+    openModalRegister: () => void;
 }
 
 interface IResponseLogin {
     token: string;
-    usuario: {
-        id: number;
-        nome: string;
-        email: string;
-        tipo: string;
-        telefone: string;
-    }
+    id: string;
+    tipo: string;
 }
 
-export function ModalLogin({ onClose }: IModalLogin) {
+export function ModalLogin({ onClose, openModalRegister }: IModalLogin) {
+    const auth = useContext(AuthContext);
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm<ILoginUsuario>({
         resolver: zodResolver(userLogin)
     });
     const onLoginSubmit = async (data: ILoginUsuario) => {
         try {
             const result = await api.post<IResponseLogin>('/login', data);
-            localStorage.setItem('authToken', result.data.token);
+            auth?.login(result.data.token, result.data.tipo, result.data.id);
             onClose();
+            return navigate('/pets')
         } catch (error) {
             const err = error as AxiosError;
             const { message } = err.response?.data as { message: string };
@@ -78,9 +80,9 @@ export function ModalLogin({ onClose }: IModalLogin) {
 
                 <div className="flex gap-2 text-sm">
                     <p>Ainda não tem uma conta?</p>
-                    <a className="text-primary font-medium underline" href="#">
+                    <button onClick={openModalRegister} className="text-primary font-medium underline">
                         Criar conta
-                    </a>
+                    </button>
                 </div>
             </section>
         </div>

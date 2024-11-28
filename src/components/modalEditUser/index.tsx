@@ -25,12 +25,7 @@ export function ModalEditUser({ userEdit, onClose }: IModalEditUser) {
     });
 
     const onSubmit = async (data: IFormUserRegistro) => {
-        await api.put(`usuario/${userEdit.id}`, data, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
-            },
-        });
-        
+        await api.put(`usuario/${userEdit.id}`, data);
         reset();
         onClose();
     }
