@@ -8,11 +8,7 @@ interface IModalDeleteUser {
 export function ModalDeleteUser({ onClose, idUser }: IModalDeleteUser) {
   
   const handleDeleteUser = async () => {
-    await api.delete(`/usuario/${idUser}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
-      },
-    });
+    await api.delete(`/usuario/${idUser}`);
     onClose();
   };
 

@@ -18,6 +18,7 @@ export function UsuariosLista() {
     const [isModalEditUser, setIsModalEditUser] = useState<boolean>(false);
     const [userDados, setUserDados] = useState<IUsuarioDados[]>();
     const [selectTypeFindUser, setSelectTypeFindUser] = useState("");
+    const idUser = localStorage.getItem("id");
 
     const handleSelectTypeFindUser = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectTypeFindUser(event.target.value);        
@@ -31,17 +32,17 @@ export function UsuariosLista() {
 
                 const response = await api.get<IUsuarioDados[]>(url, {
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
-                    },
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
                 });
-                setUserDados(response.data);
+                setUserDados(response.data.filter((user) => user.id !== Number(idUser)));
             } catch (error) {
                 console.log(error);
 
             }
         }
         response();
-    }, [isModalEditUser, isModalDeletUsuario, selectTypeFindUser])
+    }, [isModalEditUser, isModalDeletUsuario, selectTypeFindUser, idUser])
 
 
     const handleShowHistorical = (id: number) => {
@@ -122,7 +123,8 @@ export function UsuariosLista() {
                         <tbody>
                             {
                                 userDados && userDados.length > 0 && (
-                                    userDados.map((usuario) => (
+                                    userDados
+                                        .map((usuario) => (
                                         <CampoTabelaUser
                                             key={usuario.id}
                                             id={usuario.id}
