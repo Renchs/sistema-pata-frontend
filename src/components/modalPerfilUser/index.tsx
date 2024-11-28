@@ -9,11 +9,7 @@ interface IModalPerfil {
 export function ModalPerfilUser({ idUser, onClose }: IModalPerfil) {
     const [dadosUsuario, setDadosUsuario] = useState<IUsuarioDados>();
     useEffect(() => {
-        api.get(`/usuario/${idUser}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-            }
-        })
+        api.get(`/usuario/${idUser}`)
            .then(response => response.data)
            .then(data => setDadosUsuario(data))
            .catch(error => console.error(error));

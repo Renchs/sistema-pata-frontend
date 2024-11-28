@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect } from "react";
-import { ModalLogin } from "../modalLogin";
+import { useState, useRef, useEffect, useContext } from "react";
+import { AuthContext } from "../../auth/authContext";
 
 export function DropdownMenu() {
     const [isDropdown, setIsDropdown] = useState(false);
+    const auth = useContext(AuthContext);
     const menuRef = useRef<HTMLDivElement>(null);
-    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsDropdown((prev) => !prev);
@@ -14,15 +14,6 @@ export function DropdownMenu() {
         if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
             setIsDropdown(false);
         }
-    };
-
-    const openLoginModal = () => {
-        setIsLoginModalOpen(!isLoginModalOpen);
-        setIsDropdown(false);
-    };
-
-    const closeLoginModal = () => {
-        setIsLoginModalOpen(false);
     };
 
     useEffect(() => {
@@ -46,14 +37,6 @@ export function DropdownMenu() {
                     <div className="absolute z-50 right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
                         <ul className="py-1">
                             <li>
-                                <button
-                                    onClick={openLoginModal}
-                                    className="flex w-full px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-primary"
-                                >
-                                    Login
-                                </button>
-                            </li>
-                            <li>
                                 <a
                                     href="#editar"
                                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-primary"
@@ -70,20 +53,18 @@ export function DropdownMenu() {
                                 </a>
                             </li>
                             <li>
-                                <a
-                                    href="#logout"
-                                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-primary"
+                                <button
+                                    onClick={auth?.logout}
+                                    className="w-full flex px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-primary"
                                 >
-                                    Logout
-                                </a>
+                                    Sair
+                                </button>
                             </li>
                         </ul>
                     </div>
                 )}
 
             </div>
-            {/* Modal de Login */}
-            {isLoginModalOpen && <ModalLogin onClose={closeLoginModal} />}
         </>
     );
 };

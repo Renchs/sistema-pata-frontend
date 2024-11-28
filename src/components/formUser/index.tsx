@@ -14,11 +14,18 @@ interface IFormUser {
     errors: Partial<Record<keyof IFormUserRegistro, FieldError>>;
     editForm?: boolean;
     onClose?: () => void;
+    toggleModal?: () => void;
 }
 
-export function FormUser({ onSubmit, control, register, errors, handleSubmit, editForm, onClose }: IFormUser) {
+export function FormUser({ onSubmit, control, register, errors, handleSubmit, editForm, onClose, toggleModal }: IFormUser) {
+    const tipoUsuario = localStorage.getItem("tipo");
     return (
-        <section className={`w-[380px] ${editForm ? 'h-[600px]' : 'h-[800px]'} flex flex-col items-center justify-evenly shadow-xl rounded-lg bg-white`}>
+        <section className={`w-[380px] ${editForm
+            ? 'h-[600px]'
+            : tipoUsuario === "administrador"
+                ? 'h-[800px]'
+                : 'h-[720px]'
+            } flex flex-col items-center justify-evenly shadow-xl rounded-lg bg-white`}>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
                 <img className="w-[147px]" src="/src/assets/Logo.png" alt="AdotaPet" />
                 <CampoInput
@@ -72,17 +79,34 @@ export function FormUser({ onSubmit, control, register, errors, handleSubmit, ed
                         />
                     </>
                 )}
-                <Controller
-                    name="tipo"
-                    control={control}
-                    render={({ field }) => (
-                        <select  {...field} id="tipo" defaultValue={""} required className="focus:outline-none">
-                            <option disabled value="">Tipo de conta</option>
-                            <option value="usuario">Usuário</option>
-                            <option value="administrador">Administrador</option>
-                        </select>
-                    )}
-                />
+                {tipoUsuario === "administrador" ? (
+                    <Controller
+                        name="tipo"
+                        control={control}
+                        render={({ field }) => (
+                            <select
+                                {...field}
+                                id="tipo"
+                                defaultValue={""}
+                                required
+                                className="focus:outline-none"
+                            >
+                                <option disabled value="">
+                                    Tipo de conta
+                                </option>
+                                <option value="usuario">Usuário</option>
+                                <option value="administrador">Administrador</option>
+                            </select>
+                        )}
+                    />
+                ) : (
+                    <input
+                        type="hidden"
+                        value="usuario"
+                        {...register("tipo")}
+                    />
+                )}
+
                 <button type="submit" className="w-[281px] h-10 rounded-lg bg-primary text-white">
                     {editForm ? 'Editar' : 'Criar Conta'}
                 </button>
@@ -92,6 +116,12 @@ export function FormUser({ onSubmit, control, register, errors, handleSubmit, ed
                 )}
 
             </form>
+            {toggleModal && (
+                <div className="flex gap-2">
+                    <p>Ja tem uma conta?</p>
+                    <button onClick={toggleModal} className="text-primary underline">Fazer Login</button>
+                </div>
+            )}
         </section>
 
     );
