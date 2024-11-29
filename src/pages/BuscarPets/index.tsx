@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { CardPet } from "../../components/cardPet";
-import { dadosPetLista } from "../../utils/exemploDeDados";
 import { CampoFiltroPet } from "../../components/campoFiltroPet";
 import { ModalEditPet } from "../../components/modalEditPet";
 import { IFormPetRegistro } from "../../schemas/petValidacao";
@@ -14,20 +13,18 @@ export function BuscarPets() {
     const [selectEditPet, setSelectEditPet] = useState<number>();
     const [selectDeletePet, setSelectDeletePet] = useState<number>();
     const [isModalDeletePet, setIsModalDeletePet] = useState(false);
-    const [isModalEditePet, setIsModalEditePet] = useState(false);
+    const [isModalEditPet, setIsModalEditPet] = useState(false);
     const [petEdit, setPetEdit] = useState<IFormPetRegistro>();
     const [petsData, setPetsData] = useState<IPetDados[]>();
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await api.get('/pets');
-            console.log(result);
-            
+            const result = await api.get('/pets');            
             setPetsData(result.data);
         };
-        
+        console.log(setPetsData);
         fetchData();
-    }, []);
+    }, [isModalDeletePet, isModalEditPet]);
 
     const handleSelectPersonalidade = (personalidade: string) => {
         setSelectPersonalidade(personalidade);
@@ -36,7 +33,7 @@ export function BuscarPets() {
 
     const handleSelectEditPet = (petId: number) => {
         setSelectEditPet(petId);
-        setIsModalEditePet(true);
+        setIsModalEditPet(true);
       
         setPetEdit({
             nome: "Rex",
@@ -85,12 +82,12 @@ export function BuscarPets() {
 
             <div className="flex gap-2 items-center text-sm">
                 <h3 className="font-bold">Resultados</h3>
-                <p className="text-sm w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white font-medium">{dadosPetLista.length}</p>
+                <p className="text-sm w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white font-medium">{petsData?.length}</p>
             </div>
 
-            {isModalEditePet && petEdit && (
+            {isModalEditPet && petEdit && (
                 <div className="fixed z-20 inset-0 flex justify-center items-center bg-black bg-opacity-50">
-                        <ModalEditPet petEdit={petEdit} onClose={() => setIsModalEditePet(false)} />
+                        <ModalEditPet petEdit={petEdit} onClose={() => setIsModalEditPet(false)} />
                 </div>
             )}
 
@@ -117,11 +114,11 @@ export function BuscarPets() {
             )}
 
             <div className="flex items-start justify-center gap-4 w-full p-4 flex-wrap">
-                {dadosPetLista.length > 0 && (
-                    dadosPetLista.map((pet, i) => (
+                {petsData && petsData.length > 0 && (
+                    petsData.map((pet, i) => (
                         <CardPet
                             key={i}
-                            id={i}
+                            id={pet.id}
                             onDelete={handleSelectDeletePet}
                             onEdit={handleSelectEditPet}
                             onSelectedId={handleSelectAdocaoId}
