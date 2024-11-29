@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { calcularIdade } from "../../utils/calcularIdade";
 
 interface ICardPet {
@@ -15,6 +15,20 @@ interface ICardPet {
 }
 export function CardPet({ id, nome, especie, data_nascimento, descricao, personalidade, tamanho, onSelectedId, onDelete, onEdit }: ICardPet) {
     const [showMenu, setShowMenu] = useState(false);
+
+    const menuRef = useRef<HTMLDivElement>(null);
+    const closeOptions = (e: MouseEvent) => {
+        if (menuRef.current &&!menuRef.current.contains(e.target as Node)) {
+            setShowMenu(false);
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener("mousedown", closeOptions);
+        return () => {
+            document.removeEventListener("mousedown", closeOptions);
+        }
+    }, [])
 
     const handleClickMenu = () => {
         setShowMenu(!showMenu);
@@ -40,7 +54,7 @@ export function CardPet({ id, nome, especie, data_nascimento, descricao, persona
                 </button>
             </div>
             {showMenu && (
-                <div className="absolute right-8 top-3 w-32 bg-white border rounded shadow-lg z-10">
+                <div ref={menuRef} className="absolute right-8 top-3 w-32 bg-white border rounded shadow-lg z-10">
                     <button onClick={handleEditPet} className="block px-4 py-2 text-gray-700 hover:bg-primary hover:text-white w-full text-left" >Editar</button>
 
                     <button onClick={handleDeletePet} className="block px-4 py-2 text-gray-700 hover:bg-primary hover:text-white w-full text-left">Deletar</button>

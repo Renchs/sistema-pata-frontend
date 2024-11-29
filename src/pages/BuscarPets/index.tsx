@@ -42,7 +42,6 @@ export function BuscarPets() {
 
     const handleSelectPersonalidade = (personalidade: string) => {
         setSelectPersonalidade(personalidade);
-        console.log(selectPersonalidade);
     }
 
     const handleSelectEditPet = (petId: number, pet: IPetDados) => {
@@ -138,8 +137,8 @@ export function BuscarPets() {
                 </div>
             )}
 
-            <div className="flex items-start justify-center gap-4 w-full p-4 flex-wrap">
-                {currentPets && currentPets.length > 0 && (
+            <div className="flex items-start justify-center min-h-[700px] gap-4 w-full p-4 flex-wrap">
+                {currentPets && currentPets.length > 0 ? (
                     currentPets.map((pet, i) => (
                         <CardPet
                             key={i}
@@ -155,6 +154,8 @@ export function BuscarPets() {
                             tamanho={pet.tamanho}
                         />
                     ))
+                ) : (
+                        <p>Nennhum pet foi encontrado</p>
                 )}
             </div>
 
