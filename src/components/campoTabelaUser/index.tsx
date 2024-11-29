@@ -17,7 +17,7 @@ interface ICampoTabelaUser {
 export function CampoTabelaUser({ id, nome, email, tipo, telefone, onDelete, onEdit, onSelectedId, onhistorical }: ICampoTabelaUser) {
   const [selectedOption, setSelectedOption] = useState("");
   const resetSelect = () => {
-    setSelectedOption(""); 
+    setSelectedOption("");
   };
 
   const handleEdit = () => {
@@ -48,6 +48,7 @@ export function CampoTabelaUser({ id, nome, email, tipo, telefone, onDelete, onE
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
+    setSelectedOption(selectedValue);
 
     switch (selectedValue) {
       case "detalhes":
@@ -68,7 +69,7 @@ export function CampoTabelaUser({ id, nome, email, tipo, telefone, onDelete, onE
   }
 
   return (
-    <tr className="relative z-10 border-b border-primary bg-white">
+    <tr className="relative z-10 border border-primary rounded-lg bg-white">
       <td className="px-4 py-2 hidden md:table-cell">
         {truncarNome(nome)}
       </td>

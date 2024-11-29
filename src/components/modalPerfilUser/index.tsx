@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IUsuarioDados } from "../../interfaces/IUsuarioDados";
 import { api } from "../../services/apiService";
+import { formatarNumeroTelefone } from "../../utils/formatarNumeroTelefone";
 
 interface IModalPerfil {
     idUser: number;
@@ -22,7 +23,7 @@ export function ModalPerfilUser({ idUser, onClose }: IModalPerfil) {
                 <div className="flex flex-col gap-4">
                     <p>Nome: {dadosUsuario?.nome}</p>
                     <p>Email: {dadosUsuario?.email}</p>
-                    <p>Telefone: {dadosUsuario?.telefone}</p>
+                    <p>Telefone: {formatarNumeroTelefone(dadosUsuario?.telefone || "")}</p>
                     <p>Cargo: {dadosUsuario?.tipo}</p>
                 </div>
                 <button onClick={onClose} className="w-[150px] h-10 rounded-lg bg-red-500 text-white">Fechar</button>

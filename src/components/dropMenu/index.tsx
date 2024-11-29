@@ -47,12 +47,12 @@ export function DropdownMenu() {
                                 </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#editar"
-                                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-primary"
+                                <Link
+                                    to={`/editar-perfil`}
+                                    className="w-full flex px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-primary"
                                 >
                                     Editar Informações
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <button
@@ -66,7 +66,9 @@ export function DropdownMenu() {
                     </div>
                 )}
 
+
             </div>
+            
         </>
     );
 };

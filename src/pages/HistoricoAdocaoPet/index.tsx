@@ -1,36 +1,78 @@
-import { useParams } from "react-router-dom"
-import { dadosPetLista } from "../../utils/exemploDeDados";
+import { useNavigate, useParams } from "react-router-dom"
 import { formatarData } from "../../utils/formatarData";
-// import { IPetDados } from "../../interfaces/IPetDados";
-// import { useEffect, useState } from "react";
-// import { api } from "../../services/apiService";
+import { useEffect, useState } from "react";
+import { api } from "../../services/apiService";
+import { IPetDados } from "../../interfaces/IPetDados";
+
+interface IAdocaoDados {
+    id: number;
+    data_adocao: string;
+    usuario_id: number;
+    pets: IPetDados
+}
 
 export function HistoricoAdocaoPet() {
     const { id } = useParams();
-    console.log(id);
-    
-    // const token = localStorage.getItem('token');
-    // const [dadosPetLista, setDadosPetLista] = useState<IPetDados[]>();
+    const idUser = localStorage.getItem("id");
+    const tipo = localStorage.getItem("tipo");
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const response = await api.get(`/adocao/usuario/${id}`, {
-    //             headers: {
-    //                 'Authorization': `Bearer ${token}`,
-    //             },
-    //         });
-    //         setDadosPetLista(response.data);
-    //         console.log(response.data);
+    const navigate = useNavigate();
+    const [currentPage, setCurrent] = useState(1);
+    const [dadosPetListaApi, setDadosPetListaApi] = useState<IPetDados[] | null>();
+    const [currentPets, setCurrentPets] = useState<IPetDados[]>();
+    const petPerPage = 8;
+    const token = localStorage.getItem('token');
 
-    //     }
-    //     fetchData();
-    // }, [id, token])
+    useEffect(() => {
+        if (idUser !== id && tipo !== "administrador") {
+            navigate("/pets");
+        }
+    }, [idUser, tipo, id, navigate]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await api.get<IAdocaoDados[]>(`/adocao/usuario/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (response.data.length > 0) {
+                setDadosPetListaApi(response.data.map((adocaoDados) => adocaoDados.pets));
+            } else {
+                setDadosPetListaApi([]); 
+            }
+        };
+        fetchData();
+    }, [id, token]);
+
+    useEffect(() => {
+        if (dadosPetListaApi) {
+            const indexOfLastPet = currentPage * petPerPage;
+            const indexOfFirstPet = indexOfLastPet - petPerPage;
+            setCurrentPets(dadosPetListaApi.slice(indexOfFirstPet, indexOfLastPet) || []);
+        }
+    }, [dadosPetListaApi, currentPage]);
+
+    const totalPages = Math.ceil((dadosPetListaApi?.length || 0) / petPerPage);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrent(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrent(currentPage - 1);
+        }
+    };
+   
 
     return (
         <div className="min-h-[700px]">
-            <div className="flex items-start justify-center gap-4 w-full p-4 flex-wrap">
-                {dadosPetLista && (
-                    dadosPetLista.map((pet, i) => (
+            <div className="flex min-h-[750px] items-start justify-center gap-4 w-full p-4 flex-wrap">
+                {currentPets && currentPets.length > 0 ? (
+                    currentPets.map((pet, i) => (
                         <div key={i} className="w-[346px] h-[342px] flex flex-col justify-center border border-primary rounded-md gap-2 p-4 text-sm bg-white">
                             <div className="flex gap-2">
                                 <p>Nome:</p>
@@ -58,25 +100,15 @@ export function HistoricoAdocaoPet() {
                             </div>
                         </div>
                     ))
-                )}
-                {/* {dadosPetLista && dadosPetLista.length > 0 ? (
-                    dadosPetLista.map((pet, i) => (
-                        <div key={i} className="flex items-center gap-4 w-full">
-
-                            <div>
-                                <p>Nome: {pet.nome}</p>
-                                <p>Especie: {pet.especie}</p>
-                                <p>Data de Adoção: {pet.data_nascimento}</p>
-                            </div>
-                        </div>
-                    ))
                 ) : (
-                    <div>
-                        <div> usuario:{id} </div>
-                        <p>Nenhum pet ainda foi adotado ainda</p>
-                    </div>
-                )} */}
+                    <p>Nenhum pet foi adotado ainda.</p>
+                )}
             </div>
+            <div className="w-full flex justify-center items-center">
+                    <button onClick={handlePrevPage} className="w-[79px] h-[30px] cursor-pointer hover:transition border border-primary text-primary bg-white rounded hover:bg-primary hover:text-white ">Voltar</button>
+                    <span className="mx-4">Página {currentPage} de {totalPages}</span>
+                    <button onClick={handleNextPage} className="w-[79px] h-[30px] hover:transition border border-primary text-primary bg-white rounded hover:bg-primary hover:text-white ">Próxima</button>
+                </div>
         </div>
     )
 }
