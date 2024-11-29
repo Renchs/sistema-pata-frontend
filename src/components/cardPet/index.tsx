@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { formatarData } from "../../utils/formatarData";
+import { calcularIdade } from "../../utils/calcularIdade";
 
 interface ICardPet {
     id: number;
@@ -48,27 +48,27 @@ export function CardPet({ id, nome, especie, data_nascimento, descricao, persona
                 </div>
             )}
             <div className="flex gap-2">
-                <p>Nome:</p>
+                <p className="font-bold">Nome:</p>
                 <p>{nome}</p>
             </div>
             <div className="flex gap-2">
-                <p>Espécie:</p>
+                <p className="font-bold">Espécie:</p>
                 <p>{especie}</p>
             </div>
             <div className="flex gap-2">
-                <p>Idade:</p>
-                <p>{formatarData(data_nascimento)} anos</p>
+                <p className="font-bold">Idade:</p>
+                <p>{calcularIdade(data_nascimento)} anos</p>
             </div>
             <div className="flex gap-2">
-                <p>Personalidade:</p>
+                <p className="font-bold">Personalidade:</p>
                 <p>{personalidade}</p>
             </div>
             <div className="flex gap-2">
-                <p>Tamanho:</p>
+                <p className="font-bold">Tamanho:</p>
                 <p>{tamanho}</p>
             </div>
             <div className="flex break-words min-h-[100px] flex-col gap-1">
-                <p>Descrição:</p>
+                <p className="font-bold">Descrição:</p>
                 <p>{descricao}</p>
             </div>
             <div className="flex justify-center">

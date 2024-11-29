@@ -1,20 +1,10 @@
-export function formatarData(dataNascimento: string) {
+export function formatarData(data: string) {
 
-    const [dia, mes, ano] = dataNascimento.split('-').map(num => parseInt(num, 10));
+    const dataObj = new Date(data);
 
+    const ano = dataObj.getFullYear();
+    const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+    const dia = String(dataObj.getDate()).padStart(2, '0'); 
 
-    const dataNascimentoObj = new Date(ano, mes - 1, dia); 
-
-    const dataAtual = new Date();
-
-    let idade = dataAtual.getFullYear() - dataNascimentoObj.getFullYear();
-
-    const mesAtual = dataAtual.getMonth();
-    const diaAtual = dataAtual.getDate();
-
-    if (mesAtual < mes - 1 || (mesAtual === mes - 1 && diaAtual < dia)) {
-        idade--;
-    }
-
-    return idade;
+    return `${dia}-${mes}-${ano}`;
 }
