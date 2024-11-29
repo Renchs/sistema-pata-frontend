@@ -2,16 +2,25 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IFormPetRegistro, petFormSchema } from "../../schemas/petValidacao";
 import { FormPet } from "../../components/formPet";
-
+import toast from "react-hot-toast";
+import { api } from "../../services/apiService";
 
 export function CadastrarPet() {
-    const { control, register, handleSubmit, formState: { errors } } = useForm<IFormPetRegistro>({
+    const { reset, control, register, handleSubmit, formState: { errors } } = useForm<IFormPetRegistro>({
         resolver: zodResolver(petFormSchema)
     });
 
+    const onSubmit: SubmitHandler<IFormPetRegistro> = async (data) => {
+        try {
+            await api.post('/pet', data);
+            reset();
+            toast.success('Novo pet registrado com sucesso.');
 
-    const onSubmit = (data: IFormPetRegistro) => {        
-        console.log(data);
+        } catch (error) {
+            const err = error as AxiosError;
+            const message = (err.response?.data as { message: string })?.message || "Ocorreu um erro inesperado, aguarde e tente novamente.";
+            toast.error(message);
+        }
     }
 
     return (
