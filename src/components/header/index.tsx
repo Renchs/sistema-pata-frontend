@@ -12,6 +12,7 @@ export function Header() {
     const [isOpenModalLogin, setIsOpenModalLogin] = useState(false);
     const [isOpenModalRegister, setIsOpenModalRegister] = useState(false);
     const auth = useContext(AuthContext);
+    const id = localStorage.getItem('id');
 
     const isLogged = localStorage.getItem("token");
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -83,11 +84,13 @@ export function Header() {
                         {isLogged ? (
                             <>
                                 <Link className="hover:text-primary" to={"/pets"}>Buscar Pet</Link>
-                                <a className="hover:text-primary" href="#">Historico de Adoções</a>
+                                <Link className="hover:text-primary" to={`/historico-usuario/${id}`}>Historico de Adoções</Link>
                                 <Link className="hover:text-primary" to={"/usuarios"}>Gerenciar Usuário</Link>
                                 <Link className="hover:text-primary" to={"/cadastrar-pet"}>Cadastrar Pet</Link>
                                 <Link className="hover:text-primary" to={"/cadastrar-usuario"}>Cadastrar Usuário</Link>
-                                <a className="hover:text-primary" href="#">Minha Conta</a>
+                                <Link to={`/editar-perfil`} className="hover:text-primary">
+                                    Editar Perfil
+                                </Link>
                                 <button className="flex hover:text-primary" onClick={auth?.logout}>Sair</button>
                             </>
                         ) : (

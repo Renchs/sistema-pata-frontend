@@ -9,6 +9,8 @@ import { Toaster } from "react-hot-toast";
 import { Home } from "./pages/Home";
 import { AuthProvider } from "./auth/AuthProvider";
 import { ProtectedRoute } from "./auth/ProtectedRoute";
+import { HistoricoAdocaoPet } from "./pages/HistoricoAdocaoPet";
+import { EditarPerfil } from "./pages/EditarPerfilUsuario";
 
 
 export function App() {
@@ -27,6 +29,8 @@ export function App() {
                 <Route path="/cadastrar-pet" element={<CadastrarPet />} />
                 <Route path="/cadastrar-usuario" element={<CadastrarUsuario />} />
                 <Route path="/pets" element={<BuscarPets />} />
+                <Route path="/historico-usuario/:id" element={<HistoricoAdocaoPet /> } />
+                <Route path="/editar-perfil/" element={<EditarPerfil /> } />
               </Route>
             </Routes>
           </div>
