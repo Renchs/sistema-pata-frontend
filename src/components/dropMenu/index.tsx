@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { AuthContext } from "../../auth/authContext";
+import { Link } from "react-router-dom";
 
 export function DropdownMenu() {
     const [isDropdown, setIsDropdown] = useState(false);
     const auth = useContext(AuthContext);
     const menuRef = useRef<HTMLDivElement>(null);
+    const id = localStorage.getItem("id");
 
     const toggleMenu = () => {
         setIsDropdown((prev) => !prev);
@@ -37,12 +39,12 @@ export function DropdownMenu() {
                     <div className="absolute z-50 right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
                         <ul className="py-1">
                             <li>
-                                <a
-                                    href="#editar"
+                                <Link
+                                    to={`/historico-usuario/${id}`}
                                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-primary"
                                 >
                                     Histórico de Adoção
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a
