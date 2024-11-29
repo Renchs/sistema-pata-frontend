@@ -15,7 +15,7 @@ interface ICardPet {
 }
 export function CardPet({ id, nome, especie, data_nascimento, descricao, personalidade, tamanho, onSelectedId, onDelete, onEdit }: ICardPet) {
     const [showMenu, setShowMenu] = useState(false);
-
+    const tipo = localStorage.getItem("tipo");
     const menuRef = useRef<HTMLDivElement>(null);
     const closeOptions = (e: MouseEvent) => {
         if (menuRef.current &&!menuRef.current.contains(e.target as Node)) {
@@ -48,18 +48,22 @@ export function CardPet({ id, nome, especie, data_nascimento, descricao, persona
     }
     return (
         <div className="relative z-10 w-[346px] h-[342px] flex flex-col justify-center border border-primary rounded-md gap-2 p-4 text-sm bg-white">
-            <div className="w-full flex items-center justify-end">
-                <button onClick={handleClickMenu}>
-                    <img className="w-5" src="/src/assets/tres-pontos.svg" alt="" />
-                </button>
-            </div>
-            {showMenu && (
-                <div ref={menuRef} className="absolute right-8 top-3 w-32 bg-white border rounded shadow-lg z-10">
-                    <button onClick={handleEditPet} className="block px-4 py-2 text-gray-700 hover:bg-primary hover:text-white w-full text-left" >Editar</button>
-
-                    <button onClick={handleDeletePet} className="block px-4 py-2 text-gray-700 hover:bg-primary hover:text-white w-full text-left">Deletar</button>
-
-                </div>
+            {tipo === "administrador" && (
+                <>
+                    <div className="w-full flex items-center justify-end">
+                        <button onClick={handleClickMenu}>
+                            <img className="w-5" src="/src/assets/tres-pontos.svg" alt="" />
+                        </button>
+                    </div>
+                    {showMenu && (
+                        <div ref={menuRef} className="absolute right-8 top-3 w-32 bg-white border rounded shadow-lg z-10">
+                            <button onClick={handleEditPet} className="block px-4 py-2 text-gray-700 hover:bg-primary hover:text-white w-full text-left" >Editar</button>
+        
+                            <button onClick={handleDeletePet} className="block px-4 py-2 text-gray-700 hover:bg-primary hover:text-white w-full text-left">Deletar</button>
+        
+                        </div>
+                    )}
+                </>
             )}
             <div className="flex gap-2">
                 <p className="font-bold">Nome:</p>
