@@ -5,6 +5,7 @@ import { ModalEditPet } from "../../components/modalEditPet";
 import { IFormPetRegistro } from "../../schemas/petValidacao";
 import { IPetDados } from "../../interfaces/IPetDados";
 import { api } from "../../services/apiService";
+import toast from "react-hot-toast";
 
 export function BuscarPets() {
     const [selectPersonalidade, setSelectPersonalidade] = useState('');
@@ -19,21 +20,22 @@ export function BuscarPets() {
     const [currentPage, setCurrentPage] = useState(1);
     const petsPerPage = 9;
 
-    const fetchData = async () => {
-        try {
-            const result = await api.get('/pets', {
-                params: {
-                    personalidade: selectPersonalidade !== 'todos' ? selectPersonalidade : "",
-                    tamanho: selectTamanho !== 'todos' ? selectTamanho : "",
-                },
-            });
-            setPetsData(result.data);
-        } catch (error) {
-            console.error("Erro ao buscar pets:", error);
-        }
-    };
+    
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await api.get('/pets', {
+                    params: {
+                        personalidade: selectPersonalidade !== 'todos' ? selectPersonalidade : "",
+                        tamanho: selectTamanho !== 'todos' ? selectTamanho : "",
+                    },
+                });
+                setPetsData(result.data);
+            } catch (error) {
+                console.error("Erro ao buscar pets:", error);
+            }
+        };
         fetchData();
     }, [selectPersonalidade, selectTamanho, isModalDeletePet, isModalEditPet]);
 
@@ -43,28 +45,22 @@ export function BuscarPets() {
         console.log(selectPersonalidade);
     }
 
-    const handleSelectEditPet = (petId: number) => {
+    const handleSelectEditPet = (petId: number,) => {
         setSelectEditPet(petId);
         setIsModalEditPet(true);
-      
-        setPetEdit({
-            nome: "Rex",
-            especie: "Cachorro",
-            tamanho: "medio", 
-            personalidade: "brincalhao", 
-            descricao: "Um cachorro muito amigável",
-            data_nascimento: "10-05-2010",
-        });
-        
-        console.log(selectEditPet);
     }
 
     const handleSelectDeletePet = (petId: number) => {
         setSelectDeletePet(petId);
         setIsModalDeletePet(true);
+    }
 
-        console.log(selectDeletePet);
-
+    const deletePet = async () => {
+        await api.delete(`/pet/${selectDeletePet}`).then(() => {
+            setIsModalDeletePet(false);
+            toast.success('Pet deletado com sucesso.');
+        });
+            
     }
 
     const handleSelectAdocaoId = (adocaoId: number) => {
@@ -133,7 +129,7 @@ export function BuscarPets() {
                             </button>
                             <button
                                 className="w-[150px] h-10 rounded-lg bg-red-500 text-white"
-                                onClick={() => console.log('Deletar Pet')}
+                                onClick={() => deletePet()}
                             >
                                 Deletar
                             </button>

@@ -2,6 +2,9 @@ import { useForm } from "react-hook-form"
 import { IFormPetRegistro, petFormSchema } from "../../schemas/petValidacao";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormPet } from "../formPet";
+import { formatarData } from "../../utils/formatarData";
+import { api } from "../../services/apiService";
+import toast from "react-hot-toast";
 
 
 interface IModalEditPet {
@@ -10,14 +13,27 @@ interface IModalEditPet {
 }
 
 export function ModalEditPet({petEdit, onClose }: IModalEditPet) {
-  const { control, register, handleSubmit, formState: { errors } } = useForm<IFormPetRegistro>({
+  const { reset, control, register, handleSubmit, formState: { errors } } = useForm<IFormPetRegistro>({
     resolver: zodResolver(petFormSchema),
-    defaultValues: petEdit,
+
+    defaultValues: {
+      nome: petEdit.nome,
+      especie: petEdit.especie,
+      tamanho: petEdit.tamanho,
+      personalidade: petEdit.personalidade,
+      descricao: petEdit.descricao,
+      data_nascimento: formatarData(petEdit.data_nascimento),
+    }
   });
 
-  const onSubmit = (data: IFormPetRegistro) => {
-    console.log("dados atualizados");
-    console.log(data);
+  const onSubmit = (id: number) => {
+    const data = await api.get(` pet/${petId}`)
+    petEdit = data
+    await api.put(`pet/${id}`, data).then(() => {
+      toast.success('Pet editado com sucesso.');
+      reset();
+      onClose();
+    })
   }
   return (
     <div className="md:w-[720px] w-full sm:min-h-[600px] flex flex-col gap-4 items-center justify-center p-4 bg-white rounded-lg">
