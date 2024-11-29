@@ -21,7 +21,7 @@ export function App() {
         <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
         <AuthProvider>
           <Header />
-          <div className="flex w-full bg-[#FAFAFA] min-h-[900px] justify-center items-center">
+          <div className="flex w-full bg-[#FAFAFA] min-h-[800px] justify-center items-center">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="" element={<ProtectedRoute />}>
