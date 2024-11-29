@@ -12,10 +12,9 @@ interface IModalEditPet {
   onClose: () => void;
 }
 
-export function ModalEditPet({petEdit, onClose }: IModalEditPet) {
+export function ModalEditPet({id, petEdit, onClose }: IModalEditPet) {
   const { reset, control, register, handleSubmit, formState: { errors } } = useForm<IFormPetRegistro>({
     resolver: zodResolver(petFormSchema),
-
     defaultValues: {
       nome: petEdit.nome,
       especie: petEdit.especie,
@@ -23,18 +22,19 @@ export function ModalEditPet({petEdit, onClose }: IModalEditPet) {
       personalidade: petEdit.personalidade,
       descricao: petEdit.descricao,
       data_nascimento: formatarData(petEdit.data_nascimento),
-    }
+    },
+
+
   });
 
-  const onSubmit = (id: number) => {
-    const data = await api.get(` pet/${petId}`)
-    petEdit = data
-    await api.put(`pet/${id}`, data).then(() => {
-      toast.success('Pet editado com sucesso.');
-      reset();
-      onClose();
-    })
+  const onSubmit = async (data: IFormPetRegistro) => {
+    await api.put(`/pet/${id}`, data).then(
+      reset(),
+      onClose(),
+      toast.success("Pet editado com sucesso!")
+    );
   }
+
   return (
     <div className="md:w-[720px] w-full sm:min-h-[600px] flex flex-col gap-4 items-center justify-center p-4 bg-white rounded-lg">
       <FormPet onSubmit={onSubmit} control={control} errors={errors} handleSubmit={handleSubmit} register={register} editForm onClose={onClose} />

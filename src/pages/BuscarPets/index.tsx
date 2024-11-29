@@ -45,8 +45,8 @@ export function BuscarPets() {
         console.log(selectPersonalidade);
     }
 
-    const handleSelectEditPet = (petId: number,) => {
-        setSelectEditPet(petId);
+    const handleSelectEditPet = (petId: number, pet: IPetDados) => {
+        setSelectEditPet(pet);
         setIsModalEditPet(true);
     }
 
