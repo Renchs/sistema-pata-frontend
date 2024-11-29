@@ -1,19 +1,31 @@
-export function calcularIdade(dataNascimento: string) {
-
-    const dataNascimentoObj = new Date(dataNascimento)
-
+export function calcularIdade(dataNascimento: string): string {
+    const dataNascimentoObj = new Date(dataNascimento);
     const dataAtual = new Date();
 
-    let idade = dataAtual.getFullYear() - dataNascimentoObj.getFullYear();
+    const anoNascimento = dataNascimentoObj.getFullYear();
+    const mesNascimento = dataNascimentoObj.getMonth();
+    const diaNascimento = dataNascimentoObj.getDate();
 
+    const anoAtual = dataAtual.getFullYear();
     const mesAtual = dataAtual.getMonth();
     const diaAtual = dataAtual.getDate();
-    const mes = dataNascimentoObj.getMonth() + 1;
-    const dia = dataNascimentoObj.getDate();
 
-    if (mesAtual < mes - 1 || (mesAtual === mes - 1 && diaAtual < dia)) {
-        idade--;
+   
+    let anos = anoAtual - anoNascimento;
+
+    if (mesAtual < mesNascimento || (mesAtual === mesNascimento && diaAtual < diaNascimento)) {
+        anos--;
     }
 
-    return idade;
+    if (anos < 1) {
+        let meses = mesAtual - mesNascimento;
+
+        if (meses < 0) {
+            meses += 12; 
+        }
+
+        return `${meses} meses`;
+    }
+
+    return `${anos} anos`;
 }

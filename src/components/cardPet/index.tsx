@@ -57,7 +57,7 @@ export function CardPet({ id, nome, especie, data_nascimento, descricao, persona
             </div>
             <div className="flex gap-2">
                 <p className="font-bold">Idade:</p>
-                <p>{calcularIdade(data_nascimento)} anos</p>
+                <p>{calcularIdade(data_nascimento)}</p>
             </div>
             <div className="flex gap-2">
                 <p className="font-bold">Personalidade:</p>

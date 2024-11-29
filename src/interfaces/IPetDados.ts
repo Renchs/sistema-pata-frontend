@@ -3,5 +3,7 @@ export interface IPetDados {
     nome: string;
     especie: string;
     data_nascimento: string;
-    personalidade: string;
+    personalidade: "calmo"|"brincalhao"|"independente";
+    descricao: string;
+    tamanho: "pequeno"|"medio"|"grande";
 }

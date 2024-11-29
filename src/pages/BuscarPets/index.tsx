@@ -15,16 +15,28 @@ export function BuscarPets() {
     const [isModalDeletePet, setIsModalDeletePet] = useState(false);
     const [isModalEditPet, setIsModalEditPet] = useState(false);
     const [petEdit, setPetEdit] = useState<IFormPetRegistro>();
-    const [petsData, setPetsData] = useState<IPetDados[]>();
+    const [petsData, setPetsData] = useState<IPetDados[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const petsPerPage = 9;
+
+    const fetchData = async () => {
+        try {
+            const result = await api.get('/pets', {
+                params: {
+                    personalidade: selectPersonalidade !== 'todos' ? selectPersonalidade : "",
+                    tamanho: selectTamanho !== 'todos' ? selectTamanho : "",
+                },
+            });
+            setPetsData(result.data);
+        } catch (error) {
+            console.error("Erro ao buscar pets:", error);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            const result = await api.get('/pets');            
-            setPetsData(result.data);
-        };
-        console.log(setPetsData);
         fetchData();
-    }, [isModalDeletePet, isModalEditPet]);
+    }, [selectPersonalidade, selectTamanho, isModalDeletePet, isModalEditPet]);
+
 
     const handleSelectPersonalidade = (personalidade: string) => {
         setSelectPersonalidade(personalidade);
@@ -66,6 +78,23 @@ export function BuscarPets() {
         console.log(selectTamanho);
     }
 
+    const indexOfLastPet = currentPage * petsPerPage;
+    const indexOfFirstPet = indexOfLastPet - petsPerPage;
+    const currentPets = petsData.slice(indexOfFirstPet, indexOfLastPet);
+    const totalPages = Math.ceil(petsData.length / petsPerPage);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
     return (
         <div className="w-full flex flex-col justify-center items-center p-4 gap-4">
             <div className="w-[80%] sm:w-[500px] py-2 flex border rounded bg-white border-primary px-2">
@@ -76,8 +105,8 @@ export function BuscarPets() {
             </div>
 
             <CampoFiltroPet
-                onSelectPersonalidade={handleSelectPersonalidade}
                 onSelectTamanho={handleSelectTamanho}
+                onSelectPersonalidade={handleSelectPersonalidade}
             />
 
             <div className="flex gap-2 items-center text-sm">
@@ -114,8 +143,8 @@ export function BuscarPets() {
             )}
 
             <div className="flex items-start justify-center gap-4 w-full p-4 flex-wrap">
-                {petsData && petsData.length > 0 && (
-                    petsData.map((pet, i) => (
+                {currentPets && currentPets.length > 0 && (
+                    currentPets.map((pet, i) => (
                         <CardPet
                             key={i}
                             id={pet.id}
@@ -134,8 +163,8 @@ export function BuscarPets() {
             </div>
 
             <div className="w-full flex items-center justify-center gap-4">
-                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white">Página Anterior</button>
-                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white">Proxima Página</button>
+                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white" onClick={handlePreviousPage} disabled={currentPage === 1}>Página Anterior</button>
+                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white" onClick={handleNextPage} disabled={currentPage === totalPages}>Proxima Página </button>
             </div>
 
         </div >
