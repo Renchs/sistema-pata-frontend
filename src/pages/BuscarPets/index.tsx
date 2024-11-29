@@ -10,11 +10,12 @@ import toast from "react-hot-toast";
 export function BuscarPets() {
     const [selectPersonalidade, setSelectPersonalidade] = useState('');
     const [selectTamanho, setSelectTamanho] = useState('');
-    const [selectAdocao, setSelectAdocaoId] = useState<number>();
+    const [selectAdocaoId, setSelectAdocaoId] = useState<number>();
     const [selectEditPet, setSelectEditPet] = useState<number>();
     const [selectDeletePet, setSelectDeletePet] = useState<number>();
     const [isModalDeletePet, setIsModalDeletePet] = useState(false);
     const [isModalEditPet, setIsModalEditPet] = useState(false);
+    const [isModalAdotPet, setIsModalAdotPet] = useState(false);
     const [petEdit, setPetEdit] = useState<IFormPetRegistro>();
     const [petsData, setPetsData] = useState<IPetDados[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -44,6 +45,11 @@ export function BuscarPets() {
         setSelectPersonalidade(personalidade);
     }
 
+    const petAdoption = async () => {        
+        console.log('adotou: ',selectAdocaoId);
+        
+    }
+
     const handleSelectEditPet = (petId: number, pet: IPetDados) => {
         setSelectEditPet(pet);
         setIsModalEditPet(true);
@@ -63,14 +69,12 @@ export function BuscarPets() {
     }
 
     const handleSelectAdocaoId = (adocaoId: number) => {
+        setIsModalAdotPet(true);
         setSelectAdocaoId(adocaoId);
-        console.log(selectAdocao);
-
     }
 
     const handleSelectTamanho = (tamanho: string) => {
         setSelectTamanho(tamanho);
-        console.log(selectTamanho);
     }
 
     const indexOfLastPet = currentPage * petsPerPage;
@@ -137,6 +141,28 @@ export function BuscarPets() {
                 </div>
             )}
 
+            {isModalAdotPet && (
+                <div className="fixed z-20 inset-0 flex justify-center items-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-xl w-80 sm:w-[600px] text-center">
+                        <h3 className="text-lg font-semibold mb-4">Ficamos muito felizes com a sua adoção, clique novamente para confirmar</h3>
+                        <div className="flex justify-center gap-4">
+                            <button
+                                className="w-[150px] h-10 rounded-lg bg-white border border-primary text-primary"
+                                onClick={() => setIsModalAdotPet(false)}
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                className="w-[150px] h-10 rounded-lg bg-primary text-white"
+                                onClick={() => petAdoption()}
+                            >
+                                Adotar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="flex items-start justify-center min-h-[700px] gap-4 w-full p-4 flex-wrap">
                 {currentPets && currentPets.length > 0 ? (
                     currentPets.map((pet, i) => (
@@ -159,9 +185,26 @@ export function BuscarPets() {
                 )}
             </div>
 
-            <div className="w-full flex items-center justify-center gap-4">
-                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white" onClick={handlePreviousPage} disabled={currentPage === 1}>Página Anterior</button>
-                <button className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white" onClick={handleNextPage} disabled={currentPage === totalPages}>Proxima Página </button>
+            <div>
+
+                <div className="w-full flex items-center justify-center gap-4">
+                    {currentPage > 1 && (
+                        <button
+                            className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white"
+                            onClick={handlePreviousPage}
+                        >
+                            Página Anterior
+                        </button>
+                    )}
+                    {currentPage < totalPages && (
+                        <button
+                            className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white"
+                            onClick={handleNextPage}
+                        >
+                            Próxima Página
+                        </button>
+                    )}
+                </div>
             </div>
 
         </div >
