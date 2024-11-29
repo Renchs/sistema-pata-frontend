@@ -3,6 +3,7 @@ export interface IPetDados {
     nome: string;
     especie: string;
     descricao: string;
+    tamanho: string;
     data_nascimento: string;
     personalidade: string;
 }
