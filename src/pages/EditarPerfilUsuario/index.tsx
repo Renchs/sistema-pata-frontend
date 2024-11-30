@@ -22,6 +22,7 @@ export function EditarPerfil() {
         nome: result.data.nome,
         email: result.data.email,
         confirmarEmail: result.data.email,
+        endereco: result.data.endereco,
         telefone: result.data.telefone,
         tipo: result.data.tipo as "usuario" | "administrador",
       });
@@ -76,6 +77,14 @@ export function EditarPerfil() {
             register={register}
             type="tel"
             error={errors.telefone}
+          />
+
+          <CampoInput
+            nomeLabel="Endereço"
+            nomeRegistro="endereco"
+            register={register}
+            type="text"
+            error={errors.endereco}
           />
 
           <CampoInput

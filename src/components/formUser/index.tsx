@@ -21,10 +21,10 @@ export function FormUser({ onSubmit, control, register, errors, handleSubmit, ed
     const tipoUsuario = localStorage.getItem("tipo");
     return (
         <section className={`w-[380px] ${editForm
-            ? 'h-[600px]'
+            ? 'min-h-[600px]'
             : tipoUsuario === "administrador"
-                ? 'h-[800px]'
-                : 'h-[720px]'
+                ? 'min-h-[900px]'
+                : 'min-h-[820px]'
             } flex flex-col items-center justify-evenly shadow-xl rounded-lg bg-white`}>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
                 <img className="w-[147px]" src="/src/assets/Logo.png" alt="AdotaPet" />
@@ -62,6 +62,13 @@ export function FormUser({ onSubmit, control, register, errors, handleSubmit, ed
                 {!editForm && (
                     <>
                         <CampoInput
+                            nomeLabel="Endereço"
+                            nomeRegistro="endereco"
+                            register={register}
+                            type="text"
+                            error={errors.endereco}
+                        />
+                        <CampoInput
                             nomeLabel="Senha"
                             nomeRegistro="senha"
                             register={register}
@@ -79,7 +86,7 @@ export function FormUser({ onSubmit, control, register, errors, handleSubmit, ed
                         />
                     </>
                 )}
-                {tipoUsuario === "administrador" ? (
+                {tipoUsuario !== "usuario" ? (
                     <Controller
                         name="tipo"
                         control={control}
@@ -87,15 +94,13 @@ export function FormUser({ onSubmit, control, register, errors, handleSubmit, ed
                             <select
                                 {...field}
                                 id="tipo"
-                                defaultValue={""}
                                 required
                                 className="focus:outline-none"
                             >
-                                <option disabled value="">
-                                    Tipo de conta
-                                </option>
+                                <option value={""}>Tipo de conta</option>
                                 <option value="usuario">Usuário</option>
                                 <option value="administrador">Administrador</option>
+                                {/* Adicione mais opções, se necessário */}
                             </select>
                         )}
                     />

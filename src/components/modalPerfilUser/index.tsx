@@ -18,12 +18,13 @@ export function ModalPerfilUser({ idUser, onClose }: IModalPerfil) {
 
     return (
         <div className="fixed z-20 inset-0 flex justify-center items-center bg-black bg-opacity-50">
-            <div className="bg-white p-6 rounded-lg shadow-xl h-80 w-80 sm:w-[400px] flex flex-col justify-between items-center">
+            <div className="bg-white p-6 rounded-lg shadow-xl h-[360px] w-80 sm:w-[400px] flex flex-col justify-around items-center">
                 <h3 className="text-lg font-semibold mb-4">Detalhes do Usuário</h3>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col items-start w-full gap-4">
                     <p>Nome: {dadosUsuario?.nome}</p>
                     <p>Email: {dadosUsuario?.email}</p>
                     <p>Telefone: {formatarNumeroTelefone(dadosUsuario?.telefone || "")}</p>
+                    <p>Endereço: {dadosUsuario?.endereco}</p>
                     <p>Cargo: {dadosUsuario?.tipo}</p>
                 </div>
                 <button onClick={onClose} className="w-[150px] h-10 rounded-lg bg-red-500 text-white">Fechar</button>

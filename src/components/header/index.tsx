@@ -13,6 +13,7 @@ export function Header() {
     const [isOpenModalRegister, setIsOpenModalRegister] = useState(false);
     const auth = useContext(AuthContext);
     const id = localStorage.getItem('id');
+    const tipo = localStorage.getItem('tipo'); 
 
     const isLogged = localStorage.getItem("token");
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -53,9 +54,13 @@ export function Header() {
                     {isLogged ? (
                         <>
                             <Link className="hover:text-primary" to={"/pets"}>Buscar Pet</Link>
-                            <Link className="hover:text-primary" to={"/usuarios"}>Gerenciar Usuário</Link>
-                            <Link className="hover:text-primary" to={"/cadastrar-pet"}>Cadastrar Pet</Link>
-                            <Link className="hover:text-primary" to={"/cadastrar-usuario"}>Cadastrar Usuário</Link>
+                            {tipo === "administrador" && (    
+                                <>
+                                    <Link className="hover:text-primary" to={"/usuarios"}>Gerenciar Usuário</Link>
+                                    <Link className="hover:text-primary" to={"/cadastrar-pet"}>Cadastrar Pet</Link>
+                                    <Link className="hover:text-primary" to={"/cadastrar-usuario"}>Cadastrar Usuário</Link>
+                                </>
+                            )}
                         </>
                     ) : (
                         <>
@@ -85,9 +90,13 @@ export function Header() {
                             <>
                                 <Link className="hover:text-primary" to={"/pets"}>Buscar Pet</Link>
                                 <Link className="hover:text-primary" to={`/historico-usuario/${id}`}>Historico de Adoções</Link>
-                                <Link className="hover:text-primary" to={"/usuarios"}>Gerenciar Usuário</Link>
-                                <Link className="hover:text-primary" to={"/cadastrar-pet"}>Cadastrar Pet</Link>
-                                <Link className="hover:text-primary" to={"/cadastrar-usuario"}>Cadastrar Usuário</Link>
+                                {tipo === "administrador" && (
+                                    <>
+                                        <Link className="hover:text-primary" to={"/usuarios"}>Gerenciar Usuário</Link>
+                                        <Link className="hover:text-primary" to={"/cadastrar-pet"}>Cadastrar Pet</Link>
+                                        <Link className="hover:text-primary" to={"/cadastrar-usuario"}>Cadastrar Usuário</Link>
+                                    </>
+                                )}
                                 <Link to={`/editar-perfil`} className="hover:text-primary">
                                     Editar Perfil
                                 </Link>

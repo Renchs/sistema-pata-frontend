@@ -14,7 +14,7 @@ export function CadastrarUsuario() {
         }
     });
 
-    const onSubmit: SubmitHandler<IFormUserRegistro> = async (data) => {
+    const onSubmit: SubmitHandler<IFormUserRegistro> = async (data) => {              
         try {
             await api.post('/usuario', data);
             reset();
@@ -28,7 +28,7 @@ export function CadastrarUsuario() {
     }
 
     return (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center mt-4">
             <FormUser onSubmit={onSubmit} control={control} errors={errors} handleSubmit={handleSubmit} register={register} />
         </div>
     )

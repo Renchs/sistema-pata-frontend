@@ -6,6 +6,8 @@ export const telefoneSchema = z.string().min(1, "Telefone é obrigatório").leng
 
 export const senhaSchema = z.string().min(8, "Senha deve ter pelo menos 8 caracteres").min(1, "Senha é obrigatória").regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/, "Deve conter uma letra minúscula, uma letra maiúscula, um número e um caractere especial.").optional();
 
+export const enderecoSchema = z.string().min(4, 'O endereço deve conter pelo menos 4 caracteres.').optional();
+
 
 
 export const userLogin = z.object({
@@ -21,6 +23,7 @@ export const userFormSchema = z.object({
         .min(1, "Confirme o email"),
     telefone: telefoneSchema,
     tipo: z.enum(['usuario', 'administrador']),
+    endereco: enderecoSchema,
     senha: senhaSchema,
     confirmarSenha: z.string().min(8, "Confirme sua senha").min(1, "Confirme a senha").optional(),
 }).refine((data) => data.email === data.confirmarEmail, {
