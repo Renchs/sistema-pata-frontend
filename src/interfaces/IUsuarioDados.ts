@@ -3,5 +3,6 @@ export interface IUsuarioDados {
     nome: string;
     email: string;
     tipo: string;
+    endereco: string;
     telefone: string;
 }

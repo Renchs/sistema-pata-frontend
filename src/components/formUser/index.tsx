@@ -62,6 +62,13 @@ export function FormUser({ onSubmit, control, register, errors, handleSubmit, ed
                 {!editForm && (
                     <>
                         <CampoInput
+                            nomeLabel="Endereço"
+                            nomeRegistro="endereco"
+                            register={register}
+                            type="text"
+                            error={errors.endereco}
+                        />
+                        <CampoInput
                             nomeLabel="Senha"
                             nomeRegistro="senha"
                             register={register}
@@ -91,7 +98,7 @@ export function FormUser({ onSubmit, control, register, errors, handleSubmit, ed
                                 required
                                 className="focus:outline-none"
                             >
-                                <option disabled value="">
+                                <option disabled>
                                     Tipo de conta
                                 </option>
                                 <option value="usuario">Usuário</option>

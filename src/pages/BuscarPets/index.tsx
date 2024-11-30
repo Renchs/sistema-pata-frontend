@@ -10,6 +10,8 @@ export function BuscarPets() {
     const [selectPersonalidade, setSelectPersonalidade] = useState('');
     const [selectTamanho, setSelectTamanho] = useState('');
     const [searchEspecie, setSearchEspecie] = useState('');
+    const [ordenarIdade, setOrdenarIdade] = useState('');
+    const [statusPet, setStatusPet] = useState('');
     const [selectAdocaoId, setSelectAdocaoId] = useState<number>();
     const [selectEditPet, setSelectEditPet] = useState<number>();
     const [selectDeletePet, setSelectDeletePet] = useState<number>();
@@ -23,17 +25,22 @@ export function BuscarPets() {
 
     const fetchData = useCallback(async () => {
         try {
+            console.log('ta rodando');
+            
             const result = await api.get('/pets', {
                 params: {
                     personalidade: selectPersonalidade !== 'todos' ? selectPersonalidade : "",
                     tamanho: selectTamanho !== 'todos' ? selectTamanho : "",
+                    adotado: statusPet !== 'todos' ? statusPet : "",
+                    ordenar: ordenarIdade,
+                    especie: searchEspecie,
                 },
-            });
+            });            
             setPetsData(result.data);
         } catch (error) {
             console.error("Erro ao buscar pets:", error);
         }
-    }, [selectPersonalidade, selectTamanho]);
+    }, [searchEspecie, selectPersonalidade, selectTamanho, statusPet, ordenarIdade]);
 
 
     useEffect(() => {
@@ -72,7 +79,6 @@ export function BuscarPets() {
     }
 
     const handleSelectDeletePet = (petId: number) => {
-
         setSelectDeletePet(petId);
         setIsModalDeletePet(true);
     }
@@ -88,6 +94,10 @@ export function BuscarPets() {
         }
     };
 
+    const handleChangeOrdenarIdade = (value: string) => {
+        setOrdenarIdade(value);
+    }
+
     const handleSelectAdocaoId = (adocaoId: number) => {
         setIsModalAdotPet(true);
         setSelectAdocaoId(adocaoId);
@@ -95,6 +105,10 @@ export function BuscarPets() {
 
     const handleSelectTamanho = (tamanho: string) => {
         setSelectTamanho(tamanho);
+    }
+
+    const handleChangePersonalidde = (adot: string) => { 
+        setStatusPet(adot);
     }
 
     const indexOfLastPet = currentPage * petsPerPage;
@@ -116,8 +130,8 @@ export function BuscarPets() {
 
     return (
         <div className="w-full flex flex-col justify-center items-center p-4 gap-4">
-            <div className="w-[80%] sm:w-[500px] py-2 flex border rounded bg-white border-primary px-2">
-                <input className="w-full sm:w-[500px] rounded focus:outline-none"
+            <div className="w-[80%] sm:w-[300px] py-2 flex border rounded bg-white border-primary px-2">
+                <input className="w-full sm:w-[300px] rounded focus:outline-none"
                     placeholder="Pesquisar por espécie"
                     type="text"
                     value={searchEspecie}
@@ -128,6 +142,8 @@ export function BuscarPets() {
             </div>
 
             <CampoFiltroPet
+                onSelectOrdenarIdade={handleChangeOrdenarIdade}
+                onSelectAdotado={handleChangePersonalidde}
                 onSelectTamanho={handleSelectTamanho}
                 onSelectPersonalidade={handleSelectPersonalidade}
             />
@@ -193,6 +209,7 @@ export function BuscarPets() {
                         <CardPet
                             key={i}
                             id={pet.id}
+                            status={pet.adotado}
                             onDelete={handleSelectDeletePet}
                             onEdit={handleSelectEditPet}
                             onSelectedId={handleSelectAdocaoId}

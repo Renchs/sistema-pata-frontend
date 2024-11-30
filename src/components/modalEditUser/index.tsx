@@ -19,6 +19,8 @@ export function ModalEditUser({ userEdit, onClose }: IModalEditUser) {
         defaultValues: {
             nome: userEdit.nome,
             email: userEdit.email,
+            endereco: userEdit.endereco,
+            confirmarEmail: userEdit.email,
             telefone: userEdit.telefone,
             tipo: (userEdit.tipo || "usuario") as "usuario" | "administrador",
         }

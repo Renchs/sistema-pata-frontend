@@ -8,12 +8,13 @@ interface ICardPet {
     data_nascimento: string;
     personalidade: string;
     tamanho: string;
+    status?: boolean;
     descricao: string;
     onSelectedId: (id: number) => void;
     onEdit: (id: number) => void;
     onDelete: (id: number) => void;
 }
-export function CardPet({ id, nome, especie, data_nascimento, descricao, personalidade, tamanho, onSelectedId, onDelete, onEdit }: ICardPet) {
+export function CardPet({ id, nome, especie, data_nascimento, status, descricao, personalidade, tamanho, onSelectedId, onDelete, onEdit }: ICardPet) {
     const [showMenu, setShowMenu] = useState(false);
     const tipo = localStorage.getItem("tipo");
     const menuRef = useRef<HTMLDivElement>(null);
@@ -89,9 +90,11 @@ export function CardPet({ id, nome, especie, data_nascimento, descricao, persona
                 <p className="font-bold">Descrição:</p>
                 <p>{descricao}</p>
             </div>
-            <div className="flex justify-center">
-                <button onClick={handleChangeIdPet} className="w-[79px] h-[30px] hover:transition border border-primary text-primary bg-white rounded hover:bg-primary hover:text-white ">Adotar</button>
-            </div>
+            {!status && (
+                <div className="flex justify-center">
+                    <button onClick={handleChangeIdPet} className="w-[79px] h-[30px] hover:transition border border-primary text-primary bg-white rounded hover:bg-primary hover:text-white ">Adotar</button>
+                </div>
+            )}
         </div>
     )
 }
