@@ -64,7 +64,6 @@ export function BuscarPets() {
             console.error("Erro ao buscar pets:", error);
             toast.error('Erro ao adotar pet.');
         }
-
     }
 
     const handleSelectEditPet = (petId: number) => {
