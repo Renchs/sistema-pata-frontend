@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { CardPet } from "../../components/cardPet";
 import { CampoFiltroPet } from "../../components/campoFiltroPet";
 import { ModalEditPet } from "../../components/modalEditPet";
-import { IFormPetRegistro } from "../../schemas/petValidacao";
 import { IPetDados } from "../../interfaces/IPetDados";
 import { api } from "../../services/apiService";
 import toast from "react-hot-toast";
@@ -16,12 +15,11 @@ export function BuscarPets() {
     const [isModalDeletePet, setIsModalDeletePet] = useState(false);
     const [isModalEditPet, setIsModalEditPet] = useState(false);
     const [isModalAdotPet, setIsModalAdotPet] = useState(false);
-    const [petEdit, setPetEdit] = useState<IFormPetRegistro>();
     const [petsData, setPetsData] = useState<IPetDados[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const petsPerPage = 9;
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             const result = await api.get('/pets', {
                 params: {
@@ -33,28 +31,33 @@ export function BuscarPets() {
         } catch (error) {
             console.error("Erro ao buscar pets:", error);
         }
-    };
-
+    }, [selectPersonalidade, selectTamanho]);
+    
     useEffect(() => {
         fetchData();
-    }, [selectPersonalidade, selectTamanho, isModalDeletePet, isModalEditPet]);
+    }, [selectPersonalidade, selectTamanho, isModalDeletePet, isModalEditPet, fetchData]);
+
+    const onCloseModalEdit = async () => { 
+        setIsModalEditPet(false);
+        fetchData();
+    }
 
 
     const handleSelectPersonalidade = (personalidade: string) => {
         setSelectPersonalidade(personalidade);
     }
 
-    const petAdoption = async () => {        
+    const petAdoption = async () => {     
         console.log('adotou: ',selectAdocaoId);
-        
     }
 
     const handleSelectEditPet = (petId: number) => {
-        setSelectEditPet(petId);
-        setIsModalEditPet(true);
+        setSelectEditPet(petId); 
+        setIsModalEditPet(!isModalAdotPet);        
     }
 
     const handleSelectDeletePet = (petId: number) => {
+
         setSelectDeletePet(petId);
         setIsModalDeletePet(true);
     }
@@ -112,9 +115,9 @@ export function BuscarPets() {
                 <p className="text-sm w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white font-medium">{petsData?.length}</p>
             </div>
 
-            {isModalEditPet && petEdit && (
+            {isModalEditPet && (
                 <div className="fixed z-20 inset-0 flex justify-center items-center bg-black bg-opacity-50">
-                        <ModalEditPet petEdit={petEdit} onClose={() => setIsModalEditPet(false)} />
+                    <ModalEditPet petEdit={selectEditPet!} onClose={() => onCloseModalEdit()} />
                 </div>
             )}
 

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form"
 import { IFormPetRegistro, petFormSchema } from "../../schemas/petValidacao";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -5,33 +6,38 @@ import { FormPet } from "../formPet";
 import { formatarData } from "../../utils/formatarData";
 import { api } from "../../services/apiService";
 import toast from "react-hot-toast";
-
+import { IPetDados } from "../../interfaces/IPetDados"
 
 interface IModalEditPet {
-  petEdit: IFormPetRegistro;
+  petEdit: number;
   onClose: () => void;
 }
 
-export function ModalEditPet({id, petEdit, onClose }: IModalEditPet) {
+export function ModalEditPet({ petEdit, onClose }: IModalEditPet) {  
   const { reset, control, register, handleSubmit, formState: { errors } } = useForm<IFormPetRegistro>({
-    resolver: zodResolver(petFormSchema),
-    defaultValues: {
-      nome: petEdit.nome,
-      especie: petEdit.especie,
-      tamanho: petEdit.tamanho,
-      personalidade: petEdit.personalidade,
-      descricao: petEdit.descricao,
-      data_nascimento: formatarData(petEdit.data_nascimento),
-    },
-
-
+    resolver: zodResolver(petFormSchema)
   });
+  useEffect(() => {
+    const editPet = async () => {
+      api.get<IPetDados>(`/pet/${petEdit}`).then((response) => {
+        reset({
+          nome: response.data.nome,
+          especie: response.data.especie,
+          tamanho: response.data.tamanho,
+          personalidade: response.data.personalidade,
+          descricao: response.data.descricao,
+          data_nascimento: formatarData(response.data.data_nascimento),
+        })
+      })
+    }
+    editPet();
+  }, [petEdit, reset])
 
   const onSubmit = async (data: IFormPetRegistro) => {
-    await api.put(`/pet/${id}`, data).then(
+    await api.put(`/pet/${petEdit}`, data).then(
       reset(),
-      onClose(),
-      toast.success("Pet editado com sucesso!")
+      toast.success("Pet editado com sucesso!"),
+      onClose()
     );
   }
 
