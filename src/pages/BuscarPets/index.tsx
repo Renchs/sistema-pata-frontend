@@ -10,6 +10,7 @@ export function BuscarPets() {
     const [selectPersonalidade, setSelectPersonalidade] = useState('');
     const [selectTamanho, setSelectTamanho] = useState('');
     const [searchEspecie, setSearchEspecie] = useState('');
+    const [selectStatus, setSelectStatus] = useState('');
     const [selectAdocaoId, setSelectAdocaoId] = useState<number>();
     const [selectEditPet, setSelectEditPet] = useState<number>();
     const [selectDeletePet, setSelectDeletePet] = useState<number>();
@@ -27,13 +28,14 @@ export function BuscarPets() {
                 params: {
                     personalidade: selectPersonalidade !== 'todos' ? selectPersonalidade : "",
                     tamanho: selectTamanho !== 'todos' ? selectTamanho : "",
+                    adotado: selectStatus
                 },
             });
             setPetsData(result.data);
         } catch (error) {
             console.error("Erro ao buscar pets:", error);
         }
-    }, [selectPersonalidade, selectTamanho]);
+    }, [selectPersonalidade, selectTamanho, selectStatus]);
 
 
     useEffect(() => {
@@ -97,6 +99,10 @@ export function BuscarPets() {
         setSelectTamanho(tamanho);
     }
 
+    const handleSelectStatus = (status: string) => {
+        setSelectStatus(status);
+    }
+
     const indexOfLastPet = currentPage * petsPerPage;
     const indexOfFirstPet = indexOfLastPet - petsPerPage;
     const currentPets = petsData.slice(indexOfFirstPet, indexOfLastPet);
@@ -130,6 +136,7 @@ export function BuscarPets() {
             <CampoFiltroPet
                 onSelectTamanho={handleSelectTamanho}
                 onSelectPersonalidade={handleSelectPersonalidade}
+                onSelectStatus={handleSelectStatus}
             />
 
             <div className="flex gap-2 items-center text-sm">
