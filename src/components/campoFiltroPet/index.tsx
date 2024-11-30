@@ -8,11 +8,11 @@ interface ICampoFiltroPet {
 export function CampoFiltroPet({ onSelectPersonalidade, onSelectTamanho }: ICampoFiltroPet) {
 
     const handleChangeTamanho = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        onSelectPersonalidade(event.target.value);
+        onSelectTamanho(event.target.value);
 
     }
     const handleChangePersonalidde = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        onSelectTamanho(event.target.value);
+        onSelectPersonalidade(event.target.value);
     }
 
     return (

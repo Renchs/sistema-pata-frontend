@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom"
-import { formatarData } from "../../utils/formatarData";
 import { useEffect, useState } from "react";
 import { api } from "../../services/apiService";
 import { IPetDados } from "../../interfaces/IPetDados";
+import { calcularIdade } from "../../utils/calcularIdade";
 
 interface IAdocaoDados {
     id: number;
@@ -84,7 +84,7 @@ export function HistoricoAdocaoPet() {
                             </div>
                             <div className="flex gap-2">
                                 <p>Idade:</p>
-                                <p>{formatarData(pet.data_nascimento)} anos</p>
+                                <p>{calcularIdade(pet.data_nascimento)}</p>
                             </div>
                             <div className="flex gap-2">
                                 <p>Personalidade:</p>
