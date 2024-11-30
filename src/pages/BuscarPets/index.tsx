@@ -46,8 +46,22 @@ export function BuscarPets() {
         setSelectPersonalidade(personalidade);
     }
 
-    const petAdoption = async () => {        
-        console.log('adotou: ',selectAdocaoId);
+    const petAdoption = async () => {   
+
+        try {
+            console.log(selectAdocaoId);
+            console.log(localStorage.getItem('id'));
+            await api.post(`/adocao`, {
+                    pet_id: selectAdocaoId,
+                    usuario_id: Number(localStorage.getItem('id')),
+            }).then(() => {
+                setIsModalAdotPet(false);
+                toast.success('Pet adotado com sucesso.');
+            });
+        } catch (error) {
+            console.error("Erro ao buscar pets:", error);
+            toast.error('Erro ao adotar pet.');
+        }
         
     }
 
