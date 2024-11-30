@@ -24,9 +24,7 @@ export function BuscarPets() {
 
 
     const fetchData = useCallback(async () => {
-        try {
-            console.log('ta rodando');
-            
+        try {            
             const result = await api.get('/pets', {
                 params: {
                     personalidade: selectPersonalidade !== 'todos' ? selectPersonalidade : "",
