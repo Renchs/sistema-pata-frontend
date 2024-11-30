@@ -21,22 +21,21 @@ export function BuscarPets() {
     const [currentPage, setCurrentPage] = useState(1);
     const petsPerPage = 9;
 
-    
+    const fetchData = async () => {
+        try {
+            const result = await api.get('/pets', {
+                params: {
+                    personalidade: selectPersonalidade !== 'todos' ? selectPersonalidade : "",
+                    tamanho: selectTamanho !== 'todos' ? selectTamanho : "",
+                },
+            });
+            setPetsData(result.data);
+        } catch (error) {
+            console.error("Erro ao buscar pets:", error);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const result = await api.get('/pets', {
-                    params: {
-                        personalidade: selectPersonalidade !== 'todos' ? selectPersonalidade : "",
-                        tamanho: selectTamanho !== 'todos' ? selectTamanho : "",
-                    },
-                });
-                setPetsData(result.data);
-            } catch (error) {
-                console.error("Erro ao buscar pets:", error);
-            }
-        };
         fetchData();
     }, [selectPersonalidade, selectTamanho, isModalDeletePet, isModalEditPet]);
 
@@ -50,8 +49,8 @@ export function BuscarPets() {
         
     }
 
-    const handleSelectEditPet = (petId: number, pet: IPetDados) => {
-        setSelectEditPet(pet);
+    const handleSelectEditPet = (petId: number) => {
+        setSelectEditPet(petId);
         setIsModalEditPet(true);
     }
 
@@ -186,27 +185,25 @@ export function BuscarPets() {
             </div>
 
             <div>
-
                 <div className="w-full flex items-center justify-center gap-4">
                     {currentPage > 1 && (
                         <button
-                            className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white"
-                            onClick={handlePreviousPage}
-                        >
+                            className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary
+                             border-primary rounded-lg bg-white"
+                            onClick={handlePreviousPage}>
                             Página Anterior
                         </button>
                     )}
                     {currentPage < totalPages && (
                         <button
-                            className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary border-primary rounded-lg bg-white"
-                            onClick={handleNextPage}
-                        >
+                            className="sm:w-[150px] hover:transition w-[130px] h-9 sm:h-11 hover:bg-primary hover:text-white border text-primary
+                            border-primary rounded-lg bg-white"
+                            onClick={handleNextPage}>
                             Próxima Página
                         </button>
                     )}
                 </div>
             </div>
-
         </div >
     )
 }
