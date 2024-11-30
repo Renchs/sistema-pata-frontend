@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 export function BuscarPets() {
     const [selectPersonalidade, setSelectPersonalidade] = useState('');
     const [selectTamanho, setSelectTamanho] = useState('');
+    const [searchEspecie, setSearchEspecie] = useState('');
     const [selectAdocaoId, setSelectAdocaoId] = useState<number>();
     const [selectEditPet, setSelectEditPet] = useState<number>();
     const [selectDeletePet, setSelectDeletePet] = useState<number>();
@@ -18,6 +19,7 @@ export function BuscarPets() {
     const [petsData, setPetsData] = useState<IPetDados[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const petsPerPage = 9;
+
 
     const fetchData = useCallback(async () => {
         try {
@@ -32,12 +34,13 @@ export function BuscarPets() {
             console.error("Erro ao buscar pets:", error);
         }
     }, [selectPersonalidade, selectTamanho]);
-    
+
+
     useEffect(() => {
         fetchData();
-    }, [selectPersonalidade, selectTamanho, isModalDeletePet, isModalEditPet, fetchData]);
+    }, [fetchData]);
 
-    const onCloseModalEdit = async () => { 
+    const onCloseModalEdit = async () => {
         setIsModalEditPet(false);
         fetchData();
     }
@@ -47,13 +50,26 @@ export function BuscarPets() {
         setSelectPersonalidade(personalidade);
     }
 
-    const petAdoption = async () => {     
-        console.log('adotou: ',selectAdocaoId);
+    const petAdoption = async () => {
+        try {
+            await api.post(`/adocao`, {
+                pet_id: selectAdocaoId,
+                usuario_id: Number(localStorage.getItem('id')),
+            }).then(() => {
+                setIsModalAdotPet(false);
+                toast.success('Pet adotado com sucesso.');
+                fetchData();
+            });
+        } catch (error) {
+            console.error("Erro ao buscar pets:", error);
+            toast.error('Erro ao adotar pet.');
+        }
+
     }
 
     const handleSelectEditPet = (petId: number) => {
-        setSelectEditPet(petId); 
-        setIsModalEditPet(!isModalAdotPet);        
+        setSelectEditPet(petId);
+        setIsModalEditPet(!isModalEditPet);
     }
 
     const handleSelectDeletePet = (petId: number) => {
@@ -63,12 +79,15 @@ export function BuscarPets() {
     }
 
     const deletePet = async () => {
-        await api.delete(`/pet/${selectDeletePet}`).then(() => {
+        try {
+            await api.delete(`/pet/${selectDeletePet}`);
             setIsModalDeletePet(false);
             toast.success('Pet deletado com sucesso.');
-        });
-            
-    }
+        } catch (error) {
+            toast.error('Erro ao deletar pet.');
+            console.error("Erro ao deletar pet:", error);
+        }
+    };
 
     const handleSelectAdocaoId = (adocaoId: number) => {
         setIsModalAdotPet(true);
@@ -99,8 +118,12 @@ export function BuscarPets() {
     return (
         <div className="w-full flex flex-col justify-center items-center p-4 gap-4">
             <div className="w-[80%] sm:w-[500px] py-2 flex border rounded bg-white border-primary px-2">
-                <input className="w-full sm:w-[500px] rounded focus:outline-none" placeholder="Pesquisar por espécie" type="text" />
-                <button>
+                <input className="w-full sm:w-[500px] rounded focus:outline-none"
+                    placeholder="Pesquisar por espécie"
+                    type="text"
+                    value={searchEspecie}
+                    onChange={(e) => setSearchEspecie(e.target.value)} />
+                <button onClick={fetchData}>
                     <img src="/src/assets/search.svg" alt="Ícone de Pesquisa" />
                 </button>
             </div>
@@ -183,7 +206,7 @@ export function BuscarPets() {
                         />
                     ))
                 ) : (
-                        <p>Nennhum pet foi encontrado</p>
+                    <p>Nennhum pet foi encontrado</p>
                 )}
             </div>
 
