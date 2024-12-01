@@ -1,7 +1,9 @@
 
 # Sistema-Pata Frontend - AdotaPet
 
-#### O backend do projeto pode ser acessado clicando aqui
+#### O backend necessário para rodar o projeto pode ser acessado logo abaixo
+<a href="https://github.com/Karen-Ribeiro/sistema-pata-api" target="_blank" rel="noopener noreferrer">Sistema Pata Backend API</a> 
+
 #### Obs: Para criar o primeiro administrador, o registro deve ser feito no backend pelo postman
 
 #### Rotas disponiveis
