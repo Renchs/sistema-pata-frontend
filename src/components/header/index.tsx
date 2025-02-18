@@ -1,16 +1,16 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import DropdownMenu from "../dropMenu";
-import { ModalLogin } from "../modalLogin";
-import { ModalRegisterUser } from "../modalRegisterUser";
+// import DropdownMenu from "../dropMenu";
+// import { ModalLogin } from "../modalLogin";
+// import { ModalRegisterUser } from "../modalRegisterUser";
 import { AuthContext } from "../../auth/authContext";
 
 
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isOpenModalLogin, setIsOpenModalLogin] = useState(false);
-    const [isOpenModalRegister, setIsOpenModalRegister] = useState(false);
+    // const [isOpenModalLogin, setIsOpenModalLogin] = useState(false);
+    // const [isOpenModalRegister, setIsOpenModalRegister] = useState(false);
     const auth = useContext(AuthContext);
     const id = localStorage.getItem('id');
     const tipo = localStorage.getItem('tipo'); 
@@ -18,10 +18,10 @@ export function Header() {
     const isLogged = localStorage.getItem("token");
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-    const toggleModal = () => {
-        setIsOpenModalLogin(!isOpenModalLogin);
-        setIsOpenModalRegister(!isOpenModalRegister);
-    }
+    // const toggleModal = () => {
+    //     setIsOpenModalLogin(!isOpenModalLogin);
+    //     setIsOpenModalRegister(!isOpenModalRegister);
+    // }
 
     function scrollToSection(id: string) {
         const element = document.getElementById(id);
@@ -33,7 +33,7 @@ export function Header() {
     return (
         <>
             <header className="w-full h-[74px] flex justify-between items-center bg-white px-4 md:px-8">
-                <img className="w-[147px]" src="/src/assets/Logo.png" alt="Ícone do site AdotaPet" />
+                <img className="w-[147px]" src="/sistema-pata-frontend/assets/Logo.png" alt="Ícone do site AdotaPet" />
 
                 <div className="flex w-full justify-end lg:hidden" onClick={toggleMenu}>
                     <button className="text-primary">
@@ -72,14 +72,14 @@ export function Header() {
                     )}
                 </nav>
 
-                {isLogged ? (
+                {/* {isLogged ? (
                     <DropdownMenu />
                 ) : (
                     <div className="hidden lg:flex gap-3">
                         <button onClick={() => setIsOpenModalLogin(true)} className="w-32 h-12 rounded-lg bg-primary text-white">Fazer login</button>
                         <button onClick={() => setIsOpenModalRegister(true)} className="w-32 h-12 rounded-lg bg-white text-primary border border-primary">Registre-se</button>
                     </div>
-                )}
+                )} */}
 
                 <div
                     className={`${isMenuOpen ? 'block' : 'hidden'
@@ -112,8 +112,8 @@ export function Header() {
                     </nav>
                 </div>
             </header>
-            {isOpenModalLogin && <ModalLogin openModalRegister={() => toggleModal()} onClose={() => setIsOpenModalLogin(false)} />}
-            {isOpenModalRegister && <ModalRegisterUser toggleModal={() => toggleModal()} onClose={() => setIsOpenModalRegister(false)} />}
+            {/* {isOpenModalLogin && <ModalLogin openModalRegister={() => toggleModal()} onClose={() => setIsOpenModalLogin(false)} />}
+            {isOpenModalRegister && <ModalRegisterUser toggleModal={() => toggleModal()} onClose={() => setIsOpenModalRegister(false)} />} */}
         </>
     );
 };

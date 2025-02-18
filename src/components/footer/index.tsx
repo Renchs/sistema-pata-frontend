@@ -10,15 +10,15 @@ export function Footer() {
                 <div className="w-[305px] flex flex-col h-36 gap-3">
                     <p className="text-xl">Onde pode nos encontrar</p>
                     <div className="flex gap-3">
-                        <img src="/src/assets/svgs/location.svg" alt="localização" />
+                        <img src="/sistema-pata-frontend/assets/svgs/location.svg" alt="localização" />
                         <p>12 Rua Sol, SP, Brasil</p>
                     </div>
                     <div className="flex gap-3">
-                        <img src="/src/assets/svgs/call.svg" alt="Numero de telefone" />
+                        <img src="/sistema-pata-frontend/assets/svgs/call.svg" alt="Numero de telefone" />
                         <p>+55 (11) 91234-5678</p>
                     </div>
                     <div className="flex gap-3">
-                        <img src="/src/assets/svgs/email.svg" alt="Email para contato" />
+                        <img src="/sistema-pata-frontend/assets/svgs/email.svg" alt="Email para contato" />
                         <p>adotapetsuporte@gmail.com</p>
                     </div>
                 </div>
@@ -37,11 +37,11 @@ export function Footer() {
                 <div className="flex sm:flex-row flex-col gap-8 sm:gap-0 w-[90%] items-center justify-between">
                     <p className="text-sm text-white">Todos os direitos reservados © 2024 Adotapets</p>
                     <div className="flex justify-between w-36">
-                        <img src="/src/assets/svgs/facebook.svg" alt="Link para o facebook" />
+                        <img src="/sistema-pata-frontend/assets/svgs/facebook.svg" alt="Link para o facebook" />
                         <a rel="noopener noreferrer" target="_blank" href="https://github.com/Renchs/sistema-pata-frontend">
-                            <img src="/src/assets/svgs/github.svg" alt="Link para o github" />
+                            <img src="/sistema-pata-frontend/assets/svgs/github.svg" alt="Link para o github" />
                         </a>
-                        <img src="/src/assets/svgs/instagram.svg" alt="Link para o instagram" />
+                        <img src="/sistema-pata-frontend/assets/svgs/instagram.svg" alt="Link para o instagram" />
                     </div>
                 </div>
             </div>
