@@ -1,8 +1,13 @@
 
 # Sistema-Pata Frontend - AdotaPet
 
+### Versão hospedada (Landing Page): 
+<a href="https://renchs.github.io/sistema-pata-frontend/" target="_blank" rel="noopener noreferrer">Clique aqui</a> 
+### Obs: A versão hospedada de se trata de uma landing page, por tanto, não possui qualquer tipo de interação como registro, login ou autenticação. Para testar todas as funcionalidades, baixe o projeto conforme as instruções do readme.
+
 #### O backend necessário para rodar o projeto pode ser acessado logo abaixo
 <a href="https://github.com/Karen-Ribeiro/sistema-pata-api" target="_blank" rel="noopener noreferrer">Sistema Pata Backend API</a> 
+
 
 #### Obs: Para criar o primeiro administrador, o registro deve ser feito no backend pelo postman
 
